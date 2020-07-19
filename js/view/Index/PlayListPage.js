@@ -6,18 +6,43 @@ import {connect} from 'react-redux';
 import actions from '../../redux/actions/index';
 import {topPlaylistHigh} from '../../expand/api';
 import FlatItems from '../../wdiget/FlatItem';
+import TopNavigationBar from '../../common/TopNavigationBar';
+import {GoBack} from '../../utils/GoBack'
+
 // 歌单页面
-class PlayListPage extends React.Component {
+class PlayListPage extends React.PureComponent {
   componentDidMount() {
     this.getData();
   }
   getData = () => {};
+  /**
+   * 渲染头部
+   */
+  _renderTopBar = () => {
+    let statusbar = {
+      backgroundColor: '#ffffff',
+      barStyle: 'dark-content',
+    };
+    return (
+      <TopNavigationBar
+        title="歌单广场"
+        statusBar={statusbar}
+        style={{backgroundColor: '#ffffff'}}
+        leftButton={GoBack(this.props, 'dark')}
+      />
+    );
+  };
   _render = () => {
-    return <FlatItems />;
+    return <View>
+      <Text>hhhhh</Text>
+    </View>
   };
   render() {
     return (
-      <SafeAreaView style={styles.container}>{this._render()}</SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        {this._renderTopBar()}
+        {this._render()}
+      </SafeAreaView>
     );
   }
 }

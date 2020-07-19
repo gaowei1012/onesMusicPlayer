@@ -18,7 +18,6 @@ import {
   center,
   defaultBackgroundColor,
 } from '../../styles/constants';
-import TopNavigationBar from '../../common/TopNavigationBar';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/index';
 import {personalized} from '../../expand/api';
