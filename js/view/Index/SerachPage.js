@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 import TopNavigationBar from '../../common/TopNavigationBar'
-import {SafeAreaView, View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, FlatList, Alert} from 'react-native'
+import {SafeAreaView, View, Text, StyleSheet, TextInput, Image, TouchableOpacity, FlatList, Alert} from 'react-native'
 import actions from '../../redux/actions'
 import {connect} from 'react-redux'
 import {search} from '../../expand/api'
@@ -14,12 +14,14 @@ class SearchPage extends PureComponent {
             {id: 112, title: '天堂'},{id: 221, title: '天堂'},{id: 213, title: '天堂'}
         ],
         value: '',
+        data: null,
     }
 
-    componentDidMount() {
-        const {onLoadSearchData} = this.props;
-        const url = search + '海阔天空';
-        onLoadSearchData(url);
+    shouldComponentUpdate(nextProps) {
+        if (this.props.search !== nextProps.search) {
+            return false
+        }
+        return true
     }
 
     topnavigationbar = () => {
@@ -44,12 +46,24 @@ class SearchPage extends PureComponent {
         })
     }
 
+    handleSubmit=()=> {
+        const {value} = this.state
+        const {onLoadSearchData} = this.props;
+        const url = search + value;
+        onLoadSearchData(url);
+    }
+
     _renderItem=(data)=> {
-        console.log('data', data)
-        // const item = data.item;
-        // return <TouchableOpacity onPress={null} style={styles.searchItemBox} key={item.id}>
-        //         <Text>{item.name}</Text>
-        //     </TouchableOpacity>
+        const item = data.item;
+        return <TouchableOpacity 
+                style={styles.searchItemBox} 
+                key={item.id}
+                activeOpacity={1}
+                onPress={() => this.goToPalyer(item.id)}
+            >  
+                <Image style={styles.img1v1Url} source={{uri: item.artists[0].img1v1Url}}/>
+                <Text style={styles.name}>{item.name}</Text>
+            </TouchableOpacity>
     }
 
     _flatlist=()=> {
@@ -64,14 +78,28 @@ class SearchPage extends PureComponent {
     }
 
     render() {
-        const {data, value} = this.state;
+        const {data} = this.state;
+        const searchSubmit = (
+            <TouchableOpacity
+                style={styles.searchSubmit}
+                activeOpacity={1}
+                onPress={this.handleSubmit}
+            >
+                <Text style={styles.searchText}>🔍</Text>
+            </TouchableOpacity>
+        )
         const searchInput = (
-            <TextInput
-                style={styles.textInput}
-                onChangeText={value => this.onChangeText(value)}
-                clearTextOnFocus={true}
-                placeholder='搜索'
-            />
+            <View style={styles.searchInputBox}>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={value => this.onChangeText(value)}
+                    clearTextOnFocus={true}
+                    placeholder='搜索'
+                    onKeyPress={this.handleSearch}
+                    blurOnSubmit={false}
+                />
+                {searchSubmit}
+            </View>
         )
         // 搜索历史记录
         const searchHistory = (
@@ -93,7 +121,7 @@ class SearchPage extends PureComponent {
                 {/* <ScrollView>
                     {searchContent}
                 </ScrollView> */}
-                {this._renderItem()}
+                {this._flatlist()}
             </SafeAreaView>
         )
     }
@@ -117,14 +145,13 @@ const styles = StyleSheet.create({
         flex: 1
     },
     textInput: {
+        width: px2dp(305),
+        alignSelf: 'center',
         height: px2dp(36),
-        borderWidth:1,
-        borderColor: '#eee',
-        borderStyle: "solid",
-        marginLeft:  px2dp(24),
-        marginRight: px2dp(24),
-        borderRadius: px2dp(6),
-        paddingLeft: px2dp(6),
+        borderRightWidth: px2dp(.5),
+        borderRightColor: '#eee',
+        paddingHorizontal: px2dp(6)
+        // backgroundColor: 'red'
     },
     searchHistory: {
         marginTop: px2dp(10),
@@ -152,7 +179,40 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     searchItemBox: {
+        width: px2dp(345),
+        alignSelf: 'center',
         marginTop: px2dp(10),
+        flexDirection: 'row',
+        paddingVertical: px2dp(6),
+        alignItems: 'center',
+    },
+    img1v1Url: {
+        width: px2dp(60),
+        height: px2dp(60),
+        borderRadius: px2dp(6)
+    },
+    name: {
+        marginHorizontal: px2dp(6)
+    },
+    searchInputBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderWidth:px2dp(1),
+        borderColor: '#eee',
+        borderStyle: "solid",
+        borderRadius: px2dp(6)
+    },
+    searchSubmit: {
+        width: px2dp(48),
+        height: px2dp(36),
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopRightRadius: px2dp(6),
+        borderBottomEndRadius: px2dp(6),
+    },
+    searchText: {
+
     }
 
 })
