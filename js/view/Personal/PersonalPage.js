@@ -19,6 +19,7 @@ import PersonalItem from './components/PersonlItem';
 import { screentWidth } from '../../utils/screenUtil';
 import { px2dp } from '../../utils/px2dp';
 import NavigationUtil from '../../utils/NavigationUtil';
+import SettingItem from './components/SettingItem';
 
 class PersonalPage extends React.Component {
   state = {
@@ -84,6 +85,38 @@ class PersonalPage extends React.Component {
       </View>
     </View>
   }
+
+  _setting() {
+    return (
+      <View style={styles.settingBox}>
+        <SettingItem
+          arrow={require('../../images/common/arrow.png')}
+          icon={require('../../images/common/bofang.png')}
+          text={'我的收藏'}
+          handleFunc={() => null}
+        />
+        <SettingItem
+          arrow={require('../../images/common/arrow.png')}
+          icon={require('../../images/common/bofang.png')}
+          text={'我的收藏'}
+          handleFunc={() => null}
+        />
+        <SettingItem
+          arrow={require('../../images/common/arrow.png')}
+          icon={require('../../images/common/bofang.png')}
+          text={'我的收藏'}
+          handleFunc={() => null}
+        />
+        <SettingItem
+          arrow={require('../../images/common/arrow.png')}
+          icon={require('../../images/common/bofang.png')}
+          text={'我的收藏'}
+          handleFunc={() => null}
+          isBorder={true}
+        />
+      </View>
+    )
+  }
   
   // 退出
   _exit = () => {
@@ -100,6 +133,7 @@ class PersonalPage extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         {this._userInfo()}
+        {this._setting()}
       </SafeAreaView>
     );
   }
@@ -116,7 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   exitBox: {
-    marginTop: 30,
+    marginTop: px2dp(30),
     width: screentWidth,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -186,5 +220,12 @@ const styles = StyleSheet.create({
   nowLoginText: {
     color: '#333',
     fontSize: px2dp(12),
+  },
+  // setting
+  settingBox: {
+    alignSelf: 'center',
+    backgroundColor: '#fff',
+    width: px2dp(345),
+    borderRadius: px2dp(6)
   }
 });
