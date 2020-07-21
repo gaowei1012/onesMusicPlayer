@@ -32,6 +32,9 @@ import {
 } from './index/song/song';
 import {onLoadResourceData} from './index/resource';
 import {onLoadDjprogramData} from './index/djprogram';
+import {
+  getCatlistData
+} from './index/catlist'
 
 export default {
   onThemeChange,
@@ -69,4 +72,5 @@ export default {
   onLoadMvUrl,
   onPersonalizedData,
   onPlayListData,
+  getCatlistData,
 };

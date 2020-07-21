@@ -125,6 +125,8 @@ module.exports = {
   userInfo: 'user/detail',
   // 用户歌单
   userPlaylist: 'user/playlist',
+  // 歌单分类
+  playCatlist: '/playlist/catlist',
 
 
   // 首页天气

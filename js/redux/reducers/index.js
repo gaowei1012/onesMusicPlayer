@@ -34,6 +34,7 @@ import radioDetail from './index/radioDetail';
 import mvUrl from './video/mvUrl';
 import personalMv from './video/personalMv';
 import playList from './personal/user/playList';
+import catlisttype from './index/catlist/catlisttype';
 
 const navState = RootNavigation.router.getStateForAction(
   RootNavigation.router.getActionForPathAndParams(rootCom),
@@ -79,7 +80,8 @@ const root = combineReducers({
   radioDetail,
   mvUrl,
   personalMv,
-  playList
+  playList,
+  catlisttype,
 });
 
 export default root;

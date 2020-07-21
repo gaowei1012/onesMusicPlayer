@@ -92,15 +92,23 @@ class RankingPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  topList: state.topList,
-});
+export default connect(({topList}) => ({
+  topList,
+}), (dispatch) => ({
+  onLoadTopListData(url) {
+    dispatch(actions.onLoadTopListData(url))
+  },
+}))(RankingPage)
 
-const mapDispatchToProps = dispatch => ({
-  onLoadTopListData: url => dispatch(actions.onLoadTopListData(url)),
-});
+// const mapStateToProps = state => ({
+//   topList: state.topList,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RankingPage);
+// const mapDispatchToProps = dispatch => ({
+//   onLoadTopListData: url => dispatch(actions.onLoadTopListData(url)),
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(RankingPage);
 
 const styles = StyleSheet.create({
   container: {

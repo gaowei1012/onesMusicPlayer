@@ -8,13 +8,17 @@ import {topPlaylistHigh} from '../../expand/api';
 import FlatItems from '../../wdiget/FlatItem';
 import TopNavigationBar from '../../common/TopNavigationBar';
 import {GoBack} from '../../utils/GoBack'
+import {playCatlist} from '../../expand/api'
 
 // 歌单页面
 class PlayListPage extends React.PureComponent {
   componentDidMount() {
-    this.getData();
+    this.getCatlistType();
   }
-  getData = () => {};
+  getCatlistType() {
+    const {getCatlistData} = this.props
+    getCatlistData(playCatlist)
+  }
   /**
    * 渲染头部
    */
@@ -47,11 +51,23 @@ class PlayListPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({});
+export default connect(({catlisttype}) => ({
+  catlisttype,
+}), (dispatch) => ({
+  getCatlistData(url) {
+    dispatch(actions.getCatlistData(url))
+  },
+}))(PlayListPage)
 
-const mapDispatchToProps = dispatch => ({});
+// const mapStateToProps = state => ({
+//   catlisttype: state.catlisttype,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayListPage);
+// const mapDispatchToProps = dispatch => ({
+//   getCatlistData: url => dispatch(actions.getCatlistData(url))
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(PlayListPage);
 
 const styles = StyleSheet.create({
   container: {
