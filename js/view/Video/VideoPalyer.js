@@ -205,17 +205,13 @@ class VideoPalyer extends React.PureComponent {
     }
 }
 
-const mapStateToProps = state => ({
-    mvUrl: state.mvUrl
-})
-
-const mapDispatchToProps = dispatch => ({
-    onLoadMvUrl: url => dispatch(actions.onLoadMvUrl(url))
-})
-
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  ({mvUrl})=> ({mvUrl}),
+  (dispatch) => ({
+    onLoadMvUrl(url) {
+      dispatch(actions.onLoadMvUrl(url))
+    }
+  })
 )(VideoPalyer)
 
 const styles = StyleSheet.create({
