@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {SafeAreaView, ScrollView, Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-import {rakingList} from '../../expand/api';
+import {rakingOnesDetail} from '../../expand/api';
 import {px2dp} from '../../utils/px2dp';
 import TopNavigationBar from '../../common/TopNavigationBar';
 import {GoBack} from '../../utils/GoBack';
@@ -15,15 +15,15 @@ class RankingDetail extends PureComponent {
   }
   componentDidMount() {
     const { onLoadListData } = this.props;
-    let idx = this.props.navigation.state.params.idx;
-    console.log('idx', idx)
-    const url = `${rakingList}?idx=${idx}`;
+    let id = this.props.navigation.state.params.id;
+    console.log('id', id)
+    const url = `${rakingOnesDetail}?id=${id}`;
     console.log('url', url)
     onLoadListData(url);
   }
   render() {
     const item = this.props.rankiglist;
-    console.log('ietn ----iten', item)
+    console.log('ietm ----item', item)
     const StatusBar = {
       backgroundColor: '#ffffff',
       barStyle: 'dark-content',

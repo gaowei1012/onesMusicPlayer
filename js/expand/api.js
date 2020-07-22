@@ -67,6 +67,8 @@ module.exports = {
   topAllList: 'toplist',
   // 所有榜单内容摘要
   rakingListDeatil: 'toplist/detail',
+  // 排行榜详情 使用歌曲想详情
+  rakingOnesDetail: 'playlist/detail',
   // 歌手榜
   toplistArtist: 'toplist/artist',
   // 热门电台

@@ -46,8 +46,8 @@ class RankingPage extends React.Component {
   /**
    * 跳转对应详情页
    */
-  goToPage(idx) {
-    NavigationUtil.goPage({idx}, 'RankingDetail');
+  goToPage(id) {
+    NavigationUtil.goPage({id}, 'RankingDetail');
   }
 
   _renderContent = () => {
