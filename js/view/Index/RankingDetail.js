@@ -49,6 +49,9 @@ class RankingDetail extends PureComponent {
             <Text>pl</Text>
           </View>
         </View>
+        <View>
+          <Text>拍钢棒</Text>
+        </View>
       </ImageBackground>
      
     )
