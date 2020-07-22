@@ -98,9 +98,9 @@ class VideoPage extends React.Component {
                   </View>
                 </View>
                 <View style={styles.videoBtnBox}>
-                  <Text style={{marginRight: px2dp(4), fontSize: 16}}>{item.name}</Text>
+                  <Text numberOfLines={1} style={{marginRight: px2dp(4), fontSize: 16}}>{item.name}</Text>
                   <Text>-</Text>
-                  <Text style={{marginLeft: px2dp(4), fontSize: 12,}}>{item.copywriter}</Text>
+                  <Text numberOfLines={1} style={{marginLeft: px2dp(4), fontSize: 12, width: px2dp(200)}}>{item.copywriter}</Text>
                 </View>
           </TouchableOpacity>
         })}
@@ -165,22 +165,22 @@ class VideoPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  mv: state.mv,
-  mvDetail: state.mvDetail,
-  personalMv: state.personalMv
-});
-
-const mapDispatchToProps = dispatch => ({
-  onLoadMv: url => dispatch(actions.onLoadMv(url)),
-  onLoadMvDetail: url => dispatch(actions.onLoadMvDetail(url)),
-  onPersonalizedData: url => dispatch(actions.onPersonalizedData(url))
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VideoPage);
+  ({mv, mvDetail, personalMv}) => ({
+    mv, mvDetail, personalMv
+  }),
+  (dispatch) => ({
+    onLoadMv(url) {
+      dispatch(actions.onLoadMv(url))
+    },
+    onLoadMvDetail(url) {
+      dispatch(actions.onLoadMvDetail(url))
+    },
+    onPersonalizedData(url) {
+      dispatch(actions.onPersonalizedData(url))
+    }
+  })
+)(VideoPage)
 
 const FirstRoute = () => (
   <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderTopLeftRadius: px2dp(6),
     borderTopRightRadius: px2dp(6),
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   videoBtnBox: {
     width: px2dp(345),
@@ -211,7 +211,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#eee',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    overflow: 'hidden'
   },
   tabBox: {
     width: screentWidth,
