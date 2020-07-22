@@ -11,6 +11,7 @@ import NavigationUtil from '../../utils/NavigationUtil'
 import {connect} from 'react-redux';
 import actions from '../../redux/actions';
 import SpinnerLoading from '../../components/Spinner';
+import { FlatList } from 'react-native-gesture-handler';
 
 class RankingDetail extends PureComponent {
   constructor(props) {
@@ -49,34 +50,69 @@ class RankingDetail extends PureComponent {
             <Text>pl</Text>
           </View>
         </View>
-        <View>
-          <Text>拍钢棒</Text>
+        <View style={styles.nameWrap}>
+          <Text style={styles.name}>{item.name}</Text>
         </View>
       </ImageBackground>
-     
     )
   }
   _allPlayper() {
-
+    return (
+      <View style={styles.contentTopBox}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{flexDirection: 'row',alignItems: 'center'}}>
+          <Image style={{width: px2dp(18), height: px2dp(18), marginRight: px2dp(3)}} source={require('../../images/player.png')}/>
+          <Text>全部播放</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={1}
+        >
+          <Text>添加收藏</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+  goToPage (id){
+    // 跳转播放页
+    console.log('player', id)
+  }
+  _renderItem(data){
+    console.log('render item data', data.item)
+    const item = data.item;
+    return <TouchableOpacity style={styles.renderItemBox} 
+      onPress={() => this.goToPage(item.id)}
+      activeOpacity={1}>
+      <Image style={styles.itemImage} source={{uri: item.al.picUrl}}/>
+      <View style={styles.descBox}>
+        <Text style={styles.muiscName}>{item.name}</Text>
+        <View style={styles.muiscDescBox}>
+          {item.ar.map(item => (
+            <View key={item.id}>
+              <Text style={[styles.textSmal, {marginLeft: px2dp(2)}]}>{item.name}</Text>
+            </View>
+          ))}
+          <Text style={styles.textSmal}>-</Text>
+          <Text style={styles.textSmal}>{item.name}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   }
   _renderList() {
-
+    const item = this.props.rankiglist.item;
+    if (!item) {
+      return <SpinnerLoading/>
+    }
+    const tracks = item.tracks;
+    console.log('tracks', tracks)
+    return <FlatList
+      data={tracks}
+      renderItem={this._renderItem}
+    />
   }
   render() {
     const item = this.props.rankiglist;
     console.log('ietm ----item', item)
-    const StatusBar = {
-      backgroundColor: '#ffffff',
-      barStyle: 'dark-content',
-    };
-    const renderTopBar = (
-      <TopNavigationBar
-        title={'详情'}
-        statusBar={StatusBar}
-        style={{backgroundColor: '#ffffff'}}
-        leftButton={GoBack(this.props, 'dark')}
-      />
-    )
     return <View style={styles.container}>
       {this._topBar()}
       <View style={styles.contentBox}>
@@ -128,5 +164,46 @@ const styles = StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: px2dp(14)
+  },
+  nameWrap: {
+    width: px2dp(345),
+    alignSelf: 'center',
+    marginTop: px2dp(30),
+  },
+  name: {
+    color: '#fff',
+    fontSize: px2dp(24),
+    fontWeight: '800'
+  },
+  contentTopBox: {
+    width: px2dp(345),
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: px2dp(10),
+    marginBottom: px2dp(8)
+  },
+  itemImage: {
+    width: px2dp(24),
+    height: px2dp(24),
+    borderRadius: px2dp(12),
+    marginRight: px2dp(6)
+  },
+  renderItemBox: {
+    width: px2dp(345),
+    flexDirection: 'row',
+    alignItems:'center',
+    alignSelf: 'center',
+    marginVertical: px2dp(6)
+  },
+  muiscDescBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: px2dp(6),
+  },
+  textSmal: {
+    color: '#333',
+    fontSize: px2dp(10)
   }
 })
