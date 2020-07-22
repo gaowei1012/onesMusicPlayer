@@ -183,9 +183,9 @@ const styles = StyleSheet.create({
     marginBottom: px2dp(8)
   },
   itemImage: {
-    width: px2dp(24),
-    height: px2dp(24),
-    borderRadius: px2dp(12),
+    width: px2dp(30),
+    height: px2dp(30),
+    borderRadius: px2dp(15),
     marginRight: px2dp(6)
   },
   renderItemBox: {
