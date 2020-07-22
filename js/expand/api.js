@@ -2,7 +2,7 @@
 
 module.exports = {
   // 线下默认地址
-  base_url: 'http://localhost:3000/',
+  base_url: 'http://143.92.46.73/',
   // 首页
   banner_url: 'banner',
   // 登录 发送手机验证码
