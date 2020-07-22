@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {View, Image, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import Video from 'react-native-video';
 import {mvUrl} from '../../expand/api';
 import {connect} from 'react-redux';
@@ -136,7 +136,10 @@ class VideoPalyer extends React.PureComponent {
         <TouchableWithoutFeedback
           onPress={this.changePausedState}
         >
-          <View style={styles.playBtn}></View>
+          {/* 显示播放按钮 */}
+          <View style={styles.playBtn}>
+            <Image style={{width: px2dp(50), height: px2dp(50)}} source={require('../../images/player_action.png')}/>
+          </View>
         </TouchableWithoutFeedback>
       );
       let pausedBtn = this.state.paused ? playButtonComponent : null;
@@ -219,9 +222,9 @@ const styles = StyleSheet.create({
         flex: 1
     },
     playBtn: {
-      width: 50,
-      height: 50,
-      backgroundColor:'red',
+      width: px2dp(50),
+      height: px2dp(50),
+      // backgroundColor:'#fff',
       borderRadius: 50,
       position: "absolute",
       top: "50%",
