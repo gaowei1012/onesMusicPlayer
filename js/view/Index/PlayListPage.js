@@ -1,15 +1,12 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import {flex, center, row} from '../../styles/constants';
-import {screentWidth} from '../../utils/screenUtil';
+import {View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/index';
-import {topPlaylistHigh} from '../../expand/api';
-import FlatItems from '../../wdiget/FlatItem';
 import TopNavigationBar from '../../common/TopNavigationBar';
 import {GoBack} from '../../utils/GoBack'
-import {playCatlist} from '../../expand/api'
+import {playCatlist,playCatListDetail} from '../../expand/api'
 import TabBar from '../../utils/TabBar'
+import SpinnerLoading from '../../components/Spinner';
 
 // 歌单页面
 class PlayListPage extends React.PureComponent {
@@ -43,51 +40,63 @@ class PlayListPage extends React.PureComponent {
       />
     );
   };
-  onChangeTab() {
+  getCatListDetail(obj) {
+    console.log('--------idididid', obj)
+    const id = obj.usedCount;
+    const {getCatlistDetailData} = this.props
+    const url = `${playCatListDetail}?id=${id}`
+    getCatlistDetailData(url)
+  }
+  onChangeTab(index, id) {
     // todo
+    this.getCatListDetail(id)
+    this.setState({index})
   }
   _render = () => {
-    const catlisttype = this.props.catlisttype.item.tags;
-    console.log('catlisttype', catlisttype)
+    const catlisttype = this.props.catlisttype.item;
+    if (!catlisttype) {
+      return <SpinnerLoading/>
+    }
+    const data = catlisttype.tags;
+    console.log('catlisttype', data)
     return <View>
       <TabBar
         ref={e => this.tabs = e}
         index={this.state.index}
-        data={catlisttype}
+        data={data}
         onChange={(index, id) => this.onChangeTab(index, id)}
       />
     </View>
   };
+  _renderContent=()=> {
+    const catlistdetail = this.props.catlistdetail;
+    console.log('catlistdetail', catlistdetail)
+  }
   render() {
     return (
       <SafeAreaView style={styles.container}>
         {this._renderTopBar()}
         {this._render()}
+        {this._renderContent()}
       </SafeAreaView>
     );
   }
 }
 
-export default connect(({catlisttype}) => ({
+export default connect(({catlisttype,catlistdetail}) => ({
   catlisttype,
+  catlistdetail
 }), (dispatch) => ({
   getCatlistData(url) {
     dispatch(actions.getCatlistData(url))
   },
+  getCatlistDetailData(url) {
+    dispatch(actions.getCatlistDetailData(url))
+  }
 }))(PlayListPage)
-
-// const mapStateToProps = state => ({
-//   catlisttype: state.catlisttype,
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   getCatlistData: url => dispatch(actions.getCatlistData(url))
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(PlayListPage);
 
 const styles = StyleSheet.create({
   container: {
-    flex: flex,
+    flex: 1,
   },
 });

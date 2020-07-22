@@ -1,13 +1,15 @@
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,ScrollView,Dimensions} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,ScrollView, Dimensions} from 'react-native'
 import {px2dp} from '../utils/px2dp'
 
-const width = Dimensions.get('window').width;
+
+const width = Dimensions.get('window').width
 
 export default class TabBar extends React.Component {
     static defaultPorps = {
         data: [],
         index: -1,
+        id: null,
         onChange: () => {}
     }
     constructor(porps) {
@@ -20,7 +22,7 @@ export default class TabBar extends React.Component {
         this.scrollW = 0;
     }
     render() {
-        return (<View>
+        return (<View style={[styles.tab, this.props.style]}>
             <ScrollView
                 ref={e => this.scroll = e}
                 horizontal directionalLockEnabled
@@ -32,7 +34,7 @@ export default class TabBar extends React.Component {
                         activeOpacity={1}
                         key={item.id}
                         style={styles.itemBtn}
-                        onPress={() => this.setIndex(index)}
+                        onPress={() => this.setInex(index, item.playlistTag)}
                         onLayout={e => this.setLout(e.nativeEvent.layout, index)}
                     >
                         <Text style={[styles.item, this.state.index === index ? styles.active : '']}>{item.name}</Text>
@@ -54,9 +56,9 @@ export default class TabBar extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.index != this.props.index) {
-            this.setState({index: nextProps.index});
+            this.setState({index: nextProps.index, id: nextProps.id});
             setTimeout(() => {
-                this.setIndex(nextProps.index, false);
+                this.setInex(nextProps.index, nextProps.id, false);
             }, 200)
         }
     }
@@ -66,8 +68,8 @@ export default class TabBar extends React.Component {
         this.scrollW += layout.width;
     }
 
-    setIndex(index, bl = true) {
-        this.setState({index});
+    setInex(index, id, bl = true) {
+        this.setState({index, id});
         if (!this.scroll) return;
         let layout = this.laout_list[index];
         let rx = width / 2;
@@ -75,46 +77,45 @@ export default class TabBar extends React.Component {
         if (sx < 0) sx = 0;
         sx < this.scrollW - width && this.scroll.scrollTo({x: sx, animated: bl});
         sx >= this.scrollW - width && this.scroll.scrollToEnd({ animated: bl });
-        this.props.onChange && this.props.onChange(index);
+        this.props.onChange && this.props.onChange(index, id);
         this.shouldUpdate = true;
     }
 }
 
 const styles = StyleSheet.create({
     tab: {
-        backgroundColor: '#fbfafc',
+        backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: "center",
         borderBottomColor: '#efefef',
         borderBottomWidth: px2dp(1),
-        height: px2dp(40)
+        height: px2dp(30),
     },
     itemBtn: {
-        paddingHorizontal: px2dp(12),
-        //paddingTop: px2dp(2),
+        paddingHorizontal: px2dp(16),
+        paddingTop: px2dp(2),
         flexDirection: 'column',
         justifyContent: "center",
         alignItems: "center",
-        height: px2dp(28)
     },
     item: {
-        fontSize: px2dp(12),
+        fontSize: px2dp(14),
         color: "#333",
     },
     active: {
-        color: "#d0648f"
+        color: "#333"
     },
     line: {
-        width: px2dp(16),
+        width: px2dp(20),
         height: px2dp(2),
-        backgroundColor: "#fbfafc",
-        marginTop: px2dp(3),
+        // backgroundColor: "",
+        marginTop: px2dp(5),
         marginBottom: px2dp(2),
-        borderRadius: px2dp(6)
     },
     active2: {
-        backgroundColor: "#d0648f"
+        backgroundColor: "#DA1B2A",
+        borderRadius: px2dp(6)
     },
     sortimg: {
         width: px2dp(55),

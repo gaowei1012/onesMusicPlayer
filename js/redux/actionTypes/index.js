@@ -117,5 +117,8 @@ export default {
   get_user_play_list_fail: 'get_user_play_list_fail',
   // 获取歌单分类
   get_cat_list_success: 'get_cat_list_success',
-  get_cat_list_fail: 'get_cat_list_fail'
+  get_cat_list_fail: 'get_cat_list_fail',
+  // 获取歌单详情
+  get_cat_list_detail_success: 'get_cat_list_detail_success',
+  get_cat_list_detail_fail: 'get_cat_list_detail_fail'
 };

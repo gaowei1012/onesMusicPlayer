@@ -4,7 +4,6 @@ import { handleData, handleErrorData } from '../../../../utils/asyncActionHandle
 
 // 获取分类
 export function getCatlistData(url) {
-    console.log('url', url)
     return dispatch => {
         request(url)
             .then(res => {
@@ -12,6 +11,19 @@ export function getCatlistData(url) {
             })
             .catch(err => {
                 handleErrorData(dispatch, err, types.get_cat_list_fail)
+            })
+    }
+}
+
+// 歌单详情
+export function getCatlistDetailData(url) {
+    return dispatch => {
+        request(url)
+            .then(res => {
+                handleData(dispatch, res, types.get_cat_list_detail_success)
+            })
+            .catch(err => {
+                handleErrorData(dispatch, err, types.get_cat_list_detail_fail)
             })
     }
 }

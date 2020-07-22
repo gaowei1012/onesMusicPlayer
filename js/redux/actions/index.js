@@ -33,7 +33,8 @@ import {
 import {onLoadResourceData} from './index/resource';
 import {onLoadDjprogramData} from './index/djprogram';
 import {
-  getCatlistData
+  getCatlistData,
+  getCatlistDetailData
 } from './index/catlist'
 
 export default {
@@ -73,4 +74,5 @@ export default {
   onPersonalizedData,
   onPlayListData,
   getCatlistData,
+  getCatlistDetailData
 };
