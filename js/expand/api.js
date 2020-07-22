@@ -128,7 +128,7 @@ module.exports = {
   // 用户歌单
   userPlaylist: 'user/playlist',
   // 歌单分类
-  playCatlist: '/playlist/catlist',
+  playCatlist: 'playlist/hot',
 
 
   // 首页天气

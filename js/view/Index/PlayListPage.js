@@ -9,9 +9,16 @@ import FlatItems from '../../wdiget/FlatItem';
 import TopNavigationBar from '../../common/TopNavigationBar';
 import {GoBack} from '../../utils/GoBack'
 import {playCatlist} from '../../expand/api'
+import TabBar from '../../utils/TabBar'
 
 // 歌单页面
 class PlayListPage extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      index: 0
+    }
+  }
   componentDidMount() {
     this.getCatlistType();
   }
@@ -36,9 +43,19 @@ class PlayListPage extends React.PureComponent {
       />
     );
   };
+  onChangeTab() {
+    // todo
+  }
   _render = () => {
+    const catlisttype = this.props.catlisttype.item.tags;
+    console.log('catlisttype', catlisttype)
     return <View>
-      <Text>hhhhh</Text>
+      <TabBar
+        ref={e => this.tabs = e}
+        index={this.state.index}
+        data={catlisttype}
+        onChange={(index, id) => this.onChangeTab(index, id)}
+      />
     </View>
   };
   render() {

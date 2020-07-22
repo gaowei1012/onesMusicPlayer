@@ -4,6 +4,7 @@ import { handleData, handleErrorData } from '../../../../utils/asyncActionHandle
 
 // 获取分类
 export function getCatlistData(url) {
+    console.log('url', url)
     return dispatch => {
         request(url)
             .then(res => {
