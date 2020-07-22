@@ -1,10 +1,8 @@
 import React, {PureComponent} from 'react';
-import {SafeAreaView, ScrollView, Text, View, StyleSheet, Image, TouchableOpacity, ImageBackground, Platform} from 'react-native';
+import {Text, View, StyleSheet, Image, TouchableOpacity, ImageBackground, Platform} from 'react-native';
 
 import {rakingOnesDetail} from '../../expand/api';
 import {px2dp} from '../../utils/px2dp';
-import TopNavigationBar from '../../common/TopNavigationBar';
-import {GoBack} from '../../utils/GoBack';
 import {screentWidth} from '../../utils/screenUtil'
 import NavigationUtil from '../../utils/NavigationUtil'
 
