@@ -2,8 +2,14 @@ import React from 'react'
 import {px2dp} from '../../utils/px2dp'
 import Slider from '@react-native-community/slider'
 import Video from 'react-native-video'
-import {SafeAreaView,View,Text,StyleSheet,TouchableOpacity,Image, Alert} from 'react-native'
-import {GoBack} from '../../utils/GoBack'
+import {
+    SafeAreaView,
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    Image
+} from 'react-native'
 import NavigationUtil from '../../utils/NavigationUtil'
 
 import {connect} from 'react-redux'
@@ -79,7 +85,7 @@ class Player extends React.PureComponent {
         let time = e.currentTime;
         this.setState({
           currentTime: time,
-          sliderValue: time,
+          silderValue: time,
         })
       };
 
@@ -240,14 +246,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: px2dp(320/2),
-        // borderWidth: px2dp(1),
         backgroundColor: '#606373'
     },
     playerAndminBorder: {
         width: px2dp(320 - 46),
         height: px2dp(320 - 46),
         borderRadius: px2dp(320/2),
-        // borderWidth: px2dp(1),
         alignItems: 'center',
         borderColor: '#ddd',
         backgroundColor: '#5A5464'
