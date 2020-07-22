@@ -18,6 +18,7 @@ export function onLoadPlayListData(url) {
 
 // 获取音乐url
 export function onLoadSongUrl(url) {
+  console.log('song url', url)
   return dispatch => {
     request(url)
       .then(res => {

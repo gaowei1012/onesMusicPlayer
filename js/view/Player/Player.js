@@ -4,9 +4,11 @@ import Slider from '@react-native-community/slider'
 import Video from 'react-native-video'
 import {SafeAreaView,View,Text,StyleSheet,TouchableOpacity,Image, Alert} from 'react-native'
 import {GoBack} from '../../utils/GoBack'
+import NavigationUtil from '../../utils/NavigationUtil'
 
 import {connect} from 'react-redux'
 import actions from '../../redux/actions'
+import {Toast} from '../../utils/Toast'
 
 class Player extends React.PureComponent {
     constructor(props) {
@@ -52,13 +54,15 @@ class Player extends React.PureComponent {
         let backgroundUrl = item.al.picUrl;
         this.setState({
             name,ar,id,backgroundUrl
-        })
+        });
+        this.getSongData(id)
     }
 
-    getSongData() {
-        const {id} = this.state
+    getSongData(id) {
+        // const {id} = this.state
+        const {onLoadSongUrl} = this.props
         let url = `song/url?id=${id}`
-
+        onLoadSongUrl(url)
     }
 
     // 格式化时间
@@ -93,12 +97,15 @@ class Player extends React.PureComponent {
       };
 
     _player=()=> {
-        // const url = this.props
+        const url = this.props.songUrl.item
+        if (!url) {
+            return <>{Toast.showToast('加载中...')}</>
+        }
         return <Video
             ref={(ref) => {
                 this.player = ref
             }}
-            source={{uri: this.state.url}}
+            source={{uri: url[0].url}}
             rate={this.state.rate}
             muted={this.state.muted}
             resizeMode={this.state.resizeMode}
@@ -116,12 +123,25 @@ class Player extends React.PureComponent {
         const {iconItem, iconFotter} = this.state
         const topHeader = (
             <View style={styles.topHeader}>
-                <Text style={styles.title}>{this.state.name}</Text>
-                {
-                    this.state.ar.map(d => (
-                        <Text style={styles.name} key={d.id}>{d.name}</Text>
-                    ))
-                }
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
+                        NavigationUtil.goBack(this.props.navigation)
+                    }}
+                >
+                    <Image style={{width: px2dp(24), height: px2dp(24)}} source={require('../../images/back.png')}/>
+                </TouchableOpacity>
+                <View style={styles.titleBox}>
+                    <Text style={styles.title}>{this.state.name}</Text>
+                    {
+                        this.state.ar.map(d => (
+                            <Text style={styles.name} key={d.id}>{d.name}</Text>
+                        ))
+                    }
+                </View>
+                <TouchableOpacity>
+                    <Text>分享</Text>
+                </TouchableOpacity>
             </View>
         )
         /**
@@ -195,9 +215,11 @@ class Player extends React.PureComponent {
     }
 }
 
-export default connect(({}) => ({}), 
+export default connect(({songUrl}) => ({songUrl}), 
     (dispatch) => ({
-
+        onLoadSongUrl(url) {
+            dispatch(actions.onLoadSongUrl(url))
+        }
 }))(Player)
 
 const styles = StyleSheet.create({
@@ -273,12 +295,21 @@ const styles = StyleSheet.create({
         height: px2dp(60),
     },
     topHeader: {
-        alignItems: 'center'
+        width: px2dp(345),
+        alignSelf: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      
     },
     name: {
         color: '#ddd',
         fontSize: px2dp(12),
         marginTop: px2dp(3)
+    },
+    titleBox: {
+        flexDirection: 'column',
+        alignItems: 'center'
     },
     title: {
         fontSize: px2dp(16),
