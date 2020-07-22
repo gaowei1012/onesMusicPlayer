@@ -1,7 +1,16 @@
 
-
 import * as React from 'react'
-import {View, Text, StyleSheet, SafeAreaView,ImageBackground,Image,TouchableOpacity, ScrollView} from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet, 
+  SafeAreaView,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Platform
+} from 'react-native'
 import {connect} from 'react-redux'
 import {px2dp} from '../../utils/px2dp'
 import actions from '../../redux/actions'
@@ -10,22 +19,22 @@ import {screentWidth} from '../../utils/screenUtil'
 import NavigationUtil from '../../utils/NavigationUtil'
 import SpinnerLoading from '../../components/Spinner'
 
-class PersonalInformation extends React.Component {
+class PersonalInformation extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
       type: 1,
       menu: [
         {id: 1, name: '主页', type: 1},
-        {id: 2, name: '动态', type: 2},
+        {id: 2, name: '动态', type: 2}
       ]
     }
   }
   componentDidMount() {
     const uid = '430172280'
     const {onUserInfoData, onPlayListData} = this.props
-    const url = `${userInfo}?uid=${uid}`;
-    const personalUrl = `${userPlaylist}?uid=${uid}`;
+    const url = `${userInfo}?uid=${uid}`
+    const personalUrl = `${userPlaylist}?uid=${uid}`
     onUserInfoData(url)
     onPlayListData(personalUrl)
   }
@@ -39,8 +48,7 @@ class PersonalInformation extends React.Component {
     if (!userinfo) {
       return <SpinnerLoading/>
     }
-    const profile = userinfo.profile;
-    console.log('profile', profile)
+    const profile = userinfo.profile
     return <ImageBackground
       style={styles.topHeaderBox}
       source={{uri: profile.backgroundUrl}}
@@ -68,9 +76,10 @@ class PersonalInformation extends React.Component {
         </View>
       </View>
     </ImageBackground>
-  };
+  }
+
   playList=()=> {
-    const playlist = this.props.playList.item;
+    const playlist = this.props.playList.item
     if (!playlist) {
       return <SpinnerLoading/>
     }
@@ -93,6 +102,7 @@ class PersonalInformation extends React.Component {
       </ScrollView>
     )
   }
+
   _switchContent=()=> {
     const {menu} = this.state
     return (
@@ -116,6 +126,7 @@ class PersonalInformation extends React.Component {
       </View>
     )
   }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -139,7 +150,7 @@ const styles = StyleSheet.create({
   topHeaderNavBox: {
     width: px2dp(345),
     alignSelf: 'center',
-    marginTop: px2dp(44),
+    marginTop: Platform.OS === 'ios' ? px2dp(44) : px2dp(10),
     height: px2dp(44),
     flexDirection: 'row',
     alignItems: 'center',
@@ -226,19 +237,14 @@ const styles = StyleSheet.create({
 })
 
 
-const mapStateToProps = state => ({
-  userinfo: state.userinfo,
-  playList: state.playList
-})
-
-const mapDispatchToProps = dispatch => ({
-  onUserInfoData: url => dispatch(actions.onUserInfoData(url)),
-  onPlayListData: url => dispatch(actions.onPlayListData(url))
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(
-  PersonalInformation
-);
+export default connect(({userinfo, playList}) =>
+  ({userinfo, playList}),
+  (dispatch) => ({
+    onUserInfoData(url) {
+      dispatch(actions.onUserInfoData(url))
+    },
+    onPlayListData(url) {
+      dispatch(actions.onPlayListData(url))
+    }
+  })
+)(PersonalInformation)

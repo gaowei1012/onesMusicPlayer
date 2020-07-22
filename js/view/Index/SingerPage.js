@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   topHeaderNavBox: {
     width: px2dp(345),
     alignSelf: 'center',
-    marginTop: px2dp(44),
+    marginTop: Platform.OS === 'ios' ? px2dp(44) : px2dp(10),
     height: px2dp(44),
     flexDirection: 'row',
     alignItems: 'center',
