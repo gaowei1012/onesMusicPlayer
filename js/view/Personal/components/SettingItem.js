@@ -3,7 +3,7 @@ import {View,Text,StyleSheet,TouchableOpacity,Image} from 'react-native'
 import PropTypes from 'prop-types'
 import { px2dp } from '../../../utils/px2dp'
 
-export default SettingItem = ({icon, text, arrow, handleFunc, isBorder}) => {
+export default SettingItem = ({icon, text, arrow, handleFunc, isBorder, number, isShowNum}) => {
     return (
         <TouchableOpacity activeOpacity={1} onPress={handleFunc} style={[styles.menuWrap, isBorder ? '' : styles.notBorderBottom]}>
            <View style={styles.titleBox}>
@@ -11,6 +11,7 @@ export default SettingItem = ({icon, text, arrow, handleFunc, isBorder}) => {
                 <Text style={styles.text}>{text}</Text>
             </View>
             <View style={styles.arrowBox}>
+                {isShowNum ? <Text style={styles.number}>{number}</Text>:null}
                 <Image style={styles.arrow} source={arrow} />
             </View>
         </TouchableOpacity>
@@ -22,6 +23,8 @@ SettingItem.propTypes = {
     text: PropTypes.string,
     arrow: PropTypes.string,
     handleFunc: PropTypes.func,
+    number: PropTypes.number,
+    isShowNum: PropTypes.bool
 }
 
 
@@ -56,6 +59,12 @@ const styles = StyleSheet.create({
     },
     arrowBox: {
         marginRight: px2dp(10),
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    number: {
+        color: '#333',
+        fontSize: px2dp(12)
     },
     arrow: {
         width: px2dp(20),

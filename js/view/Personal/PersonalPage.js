@@ -52,6 +52,7 @@ class PersonalPage extends React.Component {
       },
     ],
     avatar_url: 'https://iph.href.lu/60x60',
+    cache: 0,
   }
   async componentDidMount() {
     let { item } = this.props.navigation.state.params;
@@ -98,8 +99,10 @@ class PersonalPage extends React.Component {
         <SettingItem
           arrow={require('../../images/common/arrow.png')}
           icon={require('../../images/common/bofang.png')}
-          text={'我的收藏'}
+          text={'清除缓存'}
           handleFunc={() => null}
+          isShowNum={true}
+          number={this.state.cache}
         />
         <SettingItem
           arrow={require('../../images/common/arrow.png')}
