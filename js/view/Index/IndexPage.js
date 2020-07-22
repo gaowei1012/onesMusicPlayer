@@ -16,16 +16,12 @@ import {
   ScrollView,
   Animated,
   Image,
-  View,
-  Text,
 } from 'react-native';
 import {
   banner_url,
   WeatherUrl,
-  search,
   topPlaylistHigh,
 } from '../../expand/api';
-import Spinner from 'react-native-spinkit'
 import SpinnerLoading from '../../components/Spinner'
 
 class IndexPage extends React.PureComponent {
@@ -95,18 +91,19 @@ class IndexPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  banner: state.banner,
-  weather: state.weather,
-  playHigh: state.playHigh,
-});
-const mapDispatchToProps = dispatch => ({
-  onLoadBannerData: url => dispatch(actions.onLoadBannerData(url)),
-  onLoadWeatherData: url => dispatch(actions.onLoadWeatherData(url)),
-  onLoadTopPlayListHigh: url => dispatch(actions.onLoadTopPlayListHigh(url)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(IndexPage);
+export default connect(({banner, weather, playHigh}) => ({
+  banner, weather, playHigh
+}), (dispatch) => ({
+  onLoadBannerData(url) {
+    dispatch(actions.onLoadBannerData(url))
+  },
+  onLoadWeatherData(url) {
+    dispatch(actions.onLoadWeatherData(url))
+  },
+  onLoadTopPlayListHigh(url) {
+    dispatch(actions.onLoadTopPlayListHigh(url))
+  }
+}))(IndexPage)
 
 const styles = StyleSheet.create({
   container: {
