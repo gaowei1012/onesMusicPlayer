@@ -20,6 +20,7 @@ import { screentWidth } from '../../utils/screenUtil';
 import { px2dp } from '../../utils/px2dp';
 import NavigationUtil from '../../utils/NavigationUtil';
 import SettingItem from './components/SettingItem';
+import {Toast} from '../../utils/Toast';
 
 class PersonalPage extends React.Component {
   state = {
@@ -94,13 +95,13 @@ class PersonalPage extends React.Component {
           arrow={require('../../images/common/arrow.png')}
           icon={require('../../images/common/bofang.png')}
           text={'我的收藏'}
-          handleFunc={() => null}
+          handleFunc={() => Toast.showToast('功能开发中')}
         />
         <SettingItem
           arrow={require('../../images/common/arrow.png')}
           icon={require('../../images/common/bofang.png')}
           text={'清除缓存'}
-          handleFunc={() => null}
+          handleFunc={() => Toast.showToast('功能开发中')}
           isShowNum={true}
           number={this.state.cache}
         />
@@ -108,13 +109,13 @@ class PersonalPage extends React.Component {
           arrow={require('../../images/common/arrow.png')}
           icon={require('../../images/common/bofang.png')}
           text={'我的收藏'}
-          handleFunc={() => null}
+          handleFunc={() => Toast.showToast('功能开发中')}
         />
         <SettingItem
           arrow={require('../../images/common/arrow.png')}
           icon={require('../../images/common/bofang.png')}
           text={'我的收藏'}
-          handleFunc={() => null}
+          handleFunc={() => Toast.showToast('功能开发中')}
           isBorder={true}
         />
       </View>

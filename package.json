@@ -28,6 +28,7 @@
     "react-native-lazyload": "^1.1.0",
     "react-native-orientation-locker": "^1.1.8",
     "react-native-reanimated": "^1.7.0",
+    "react-native-root-toast": "^3.2.1",
     "react-native-screens": "^2.0.0-beta.2",
     "react-native-slide": "^0.2.2",
     "react-native-sound": "^0.11.0",
