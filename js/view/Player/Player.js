@@ -2,10 +2,13 @@ import React from 'react'
 import {px2dp} from '../../utils/px2dp'
 import Slider from '@react-native-community/slider'
 import Video from 'react-native-video'
-import {SafeAreaView,View,Text,StyleSheet,TouchableOpacity,Image} from 'react-native'
+import {SafeAreaView,View,Text,StyleSheet,TouchableOpacity,Image, Alert} from 'react-native'
 import {GoBack} from '../../utils/GoBack'
 
-export default class Player extends React.PureComponent {
+import {connect} from 'react-redux'
+import actions from '../../redux/actions'
+
+class Player extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = {
@@ -32,12 +35,30 @@ export default class Player extends React.PureComponent {
             silderValue: 0, // 当前进度条长度
             paused: true, // 播放暂停
             isFullScreen: false,
-
+            item: {}, // 保存上级传过来的数据
+            name: null,
+            ar: [],
+            id: null, // 歌曲id
+            backgroundUrl: null,
         }
     }
 
     componentDidMount() {
         // song/url?id=33894312
+        let item = this.props.navigation.state.params.item;
+        let name = item.name;
+        let ar = item.ar;
+        let id = item.id;
+        let backgroundUrl = item.al.picUrl;
+        this.setState({
+            name,ar,id,backgroundUrl
+        })
+    }
+
+    getSongData() {
+        const {id} = this.state
+        let url = `song/url?id=${id}`
+
     }
 
     // 格式化时间
@@ -72,6 +93,7 @@ export default class Player extends React.PureComponent {
       };
 
     _player=()=> {
+        // const url = this.props
         return <Video
             ref={(ref) => {
                 this.player = ref
@@ -86,9 +108,22 @@ export default class Player extends React.PureComponent {
         />
     }
 
+    switchPlayer=()=> {
+        
+    }
+
     render() {
         const {iconItem, iconFotter} = this.state
-        const picUrl = 'http://p1.music.126.net/7NRQ7KW3KEGylhIs8kArZg==/109951163940478780.jpg'
+        const topHeader = (
+            <View style={styles.topHeader}>
+                <Text style={styles.title}>{this.state.name}</Text>
+                {
+                    this.state.ar.map(d => (
+                        <Text style={styles.name} key={d.id}>{d.name}</Text>
+                    ))
+                }
+            </View>
+        )
         /**
          * 动画:
          *   播放图片， 顺时针旋转
@@ -98,7 +133,7 @@ export default class Player extends React.PureComponent {
                 <View style={styles.playerAndminBox}>
                     <View style={styles.playerAndminBorder}>
                         {/* <Text>播放</Text> */}
-                        <Image style={styles.playerAndminImageBox} source={{uri: picUrl}}/>
+                        <Image style={styles.playerAndminImageBox} source={{uri: this.state.backgroundUrl}}/>
                     </View>
                 </View>
             </View>
@@ -136,7 +171,7 @@ export default class Player extends React.PureComponent {
         const playerFotter = (
             <View style={styles.playerFooterBox}>
                 {iconFotter && iconFotter.map(item => (
-                    <TouchableOpacity activeOpacity={.9} key={item.id} style={styles.fotterImgBox}>
+                    <TouchableOpacity onPress={this.switchPlayer} activeOpacity={.9} key={item.id} style={styles.fotterImgBox}>
                         {
                             item.className == 'icon' ? 
                                 <Image style={{width: px2dp(30), height: px2dp(30)}} source={item.icon}/> 
@@ -150,6 +185,7 @@ export default class Player extends React.PureComponent {
         return (
             <SafeAreaView style={styles.container}>
                 {this._player()}
+                {topHeader}
                 {playerAndmin}
                 {likeMeunItem}
                 {playerSilder}
@@ -159,6 +195,11 @@ export default class Player extends React.PureComponent {
     }
 }
 
+export default connect(({}) => ({}), 
+    (dispatch) => ({
+
+}))(Player)
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -166,7 +207,7 @@ const styles = StyleSheet.create({
     },
     // 音乐播放
     playerAndminWrap: {
-        marginTop: px2dp(130),
+        marginTop: px2dp(100),
         alignItems: 'center',
     },
     playerAndminBox: {
@@ -230,5 +271,18 @@ const styles = StyleSheet.create({
     fotterImgBox: {
         width: px2dp(30),
         height: px2dp(60),
+    },
+    topHeader: {
+        alignItems: 'center'
+    },
+    name: {
+        color: '#ddd',
+        fontSize: px2dp(12),
+        marginTop: px2dp(3)
+    },
+    title: {
+        fontSize: px2dp(16),
+        fontWeight: '600',
+        color: '#fff'
     }
 })

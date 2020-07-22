@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity, ImageBackground, Platform} from 'react-native';
+import {Text, View, StyleSheet, Image, TouchableOpacity, ImageBackground, Platform, Alert} from 'react-native';
 
 import {rakingOnesDetail} from '../../expand/api';
 import {px2dp} from '../../utils/px2dp';
@@ -30,7 +30,6 @@ class RankingDetail extends PureComponent {
       return <SpinnerLoading/>
     }
     const subscribers = item.subscribers;
-    // console.log('subscribers', subscribers[0].backgroundUrl)
     return (
       <ImageBackground style={styles.background} source={{uri: subscribers[0].backgroundUrl}}>
         {/* top header */}
@@ -71,15 +70,13 @@ class RankingDetail extends PureComponent {
       </View>
     )
   }
-  goToPage (id){
-    // 跳转播放页
-    console.log('player', id)
-  }
+
   _renderItem(data){
-    console.log('render item data', data.item)
     const item = data.item;
     return <TouchableOpacity style={styles.renderItemBox} 
-      onPress={() => this.goToPage(item.id)}
+      onPress={() => {
+        NavigationUtil.goPage({item}, 'Player')
+      }}
       activeOpacity={1}>
       <Image style={styles.itemImage} source={{uri: item.al.picUrl}}/>
       <View style={styles.descBox}>
@@ -110,7 +107,6 @@ class RankingDetail extends PureComponent {
   }
   render() {
     const item = this.props.rankiglist;
-    console.log('ietm ----item', item)
     return <View style={styles.container}>
       {this._topBar()}
       <View style={styles.contentBox}>

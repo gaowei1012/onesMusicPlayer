@@ -51,6 +51,8 @@ class Player extends React.Component {
 
   componentDidMount() {
     this.getData();
+    let id = this.props.navigation.state.params;
+    console.log('idididid', id)
   }
 
   componentWillReceiveProps() {}
