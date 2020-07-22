@@ -133,11 +133,13 @@ class Player extends React.PureComponent {
                 </TouchableOpacity>
                 <View style={styles.titleBox}>
                     <Text style={styles.title}>{this.state.name}</Text>
-                    {
-                        this.state.ar.map(d => (
-                            <Text style={styles.name} key={d.id}>{d.name}</Text>
-                        ))
-                    }
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        {
+                            this.state.ar.map(d => (
+                                <Text style={styles.name} key={d.id}>{d.name}</Text>
+                            ))
+                        }
+                    </View>
                 </View>
                 <TouchableOpacity>
                     <Text>分享</Text>
@@ -305,7 +307,8 @@ const styles = StyleSheet.create({
     name: {
         color: '#ddd',
         fontSize: px2dp(12),
-        marginTop: px2dp(3)
+        marginTop: px2dp(3),
+        marginRight: px2dp(3)
     },
     titleBox: {
         flexDirection: 'column',
