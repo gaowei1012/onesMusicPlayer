@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {View, Image, Text, StyleSheet, TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
 import Video from 'react-native-video';
 import {mvUrl} from '../../expand/api';
 import {connect} from 'react-redux';
@@ -8,7 +8,6 @@ import {screentWidth, screentHeight} from '../../utils/screenUtil';
 import Slider from '@react-native-community/slider';
 import Orientation from 'react-native-orientation-locker';
 import { px2dp } from '../../utils/px2dp';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class VideoPalyer extends React.PureComponent {
   constructor(props) {
@@ -125,9 +124,7 @@ class VideoPalyer extends React.PureComponent {
     render() {
       const videoUrl = this.props.mvUrl.item;
       if (!videoUrl) {
-        return <View>
-          <Text>test</Text>
-        </View>
+        return <View/>
       };
       const url = videoUrl.url;
       const {rate, muted, resizeMode} = this.state;
@@ -146,16 +143,15 @@ class VideoPalyer extends React.PureComponent {
 
       // 暂停按钮、进度条、全屏按钮 是否显示
       let pausedSliderFullComponent = (
-        <View style={{position: 'absolute', bottom: 0}}>
-          <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+          <View style={styles.sliderWrap}>
             {/* 进度条 */}
             <View style={styles.sliderBox}>
               <Text style={{color: '#fff'}}>{this.formatMediaTime(this.state.currentTime)}</Text>
               <Slider
-                style={{width: px2dp(200), height: px2dp(40)}}
+                style={{width: px2dp(260), height: px2dp(40), alignItems: 'center'}}
                 value={this.state.sliderValue}
                 maximumValue={this.state.duration}
-                thumbTintColor='#000'
+                thumbTintColor='#fff'
                 minimumTrackTintColor="red"
                 maximumTrackTintColor="#ccc"
                 step={1}
@@ -164,15 +160,14 @@ class VideoPalyer extends React.PureComponent {
               <Text style={{color: '#fff'}}>{this.formatMediaTime(this.state.duration)}</Text>
             </View>
             {/* 全屏 */}
-            <View>
-              <TouchableOpacity
-                onPress={this.enterFullScreen}
-              >
-                <Text style={{backgroundColor: '#00ff00', padding: px2dp(5)}}>全屏</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={this.enterFullScreen}
+              style={styles.allWrap}
+            >
+              <Text style={styles.all}>全屏</Text>
+            </TouchableOpacity>
           </View>
-        </View>
       );
 
       let pausedSliderFull = this.state.isVisiblePausedSliderFullScreen ? pausedSliderFullComponent : null;
@@ -233,9 +228,27 @@ const styles = StyleSheet.create({
       marginTop:-25,
       zIndex:999
     },
+    sliderWrap: {
+      position: 'absolute',
+      bottom: px2dp(30),
+      width: px2dp(345),
+      alignSelf: 'center',
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
     sliderBox: {
       flexDirection:'row',
       alignSelf:'center',
-      backgroundColor: '#fff',
+      alignItems: 'center',
+      // marginBottom: px2dp(80),
+      // backgroundColor: '#fff',
+    },
+    allWrap: {
+      alignItems: 'center'
+    },
+    all: {
+      color: '#fff',
+      paddingHorizontal: px2dp(4),
+      fontSize: px2dp(12)
     }
 })
