@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     height: px2dp(45),
     alignSelf: center,
     marginTop: px2dp(4),
-    backgroundColor: defaultBackgroundColor,
+    // backgroundColor: defaultBackgroundColor,
     marginBottom: px2dp(2),
     flexDirection: row,
     alignItems: center,
