@@ -22,7 +22,7 @@ import NavigationUtil from '../../utils/NavigationUtil';
 import SettingItem from './components/SettingItem';
 import {Toast} from '../../utils/Toast';
 
-class PersonalPage extends React.Component {
+class PersonalPage extends React.PureComponent {
   state = {
     item:{},
     isLogin: true,
