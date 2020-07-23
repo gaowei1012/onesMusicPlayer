@@ -25,7 +25,8 @@ export default class SearchItem extends React.PureComponent {
     Toast.showToast('功能开发中')
   };
   goToMuiscPage = () => {
-    NavigationUtil.goPage({}, 'Player');
+    // NavigationUtil.goPage({}, 'Player');
+    Toast.showToast('功能开发中')
   };
   goToSearchPage=()=> {
     NavigationUtil.goPage({}, 'SearchPage')
