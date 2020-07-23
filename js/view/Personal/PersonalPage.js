@@ -59,7 +59,6 @@ class PersonalPage extends React.PureComponent {
     })
    let token = await DeviceStorage.get('token')
    console.log('token', token)
-    
   }
 
   goToPage=(com)=> {

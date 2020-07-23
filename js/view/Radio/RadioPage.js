@@ -10,8 +10,7 @@ import {GoBack} from '../../utils/GoBack';
 import {px2dp} from '../../utils/px2dp';
 import Swiper from 'react-native-swiper';
 import NavigationUtil from '../../utils/NavigationUtil';
-
-
+import SpinnerLoading from '../../components/Spinner';
 
 class RaioPage extends PureComponent {
   state = {
@@ -70,7 +69,9 @@ class RaioPage extends PureComponent {
   // 电台 banner
   _rederRadioBanner = () => {
     const radioBanner = this.props.radioBanner.item;
-    if (!radioBanner && radioBanner == null) return <Text style={{justifyContent: center}}>加载中...</Text>;
+    if (!radioBanner) {
+      return <SpinnerLoading/>
+    }
     return (
       <View style={styles.bannerBox}>
         <Swiper
@@ -108,8 +109,9 @@ class RaioPage extends PureComponent {
   // 电台推荐
   _radioRaking = () => {
     const radioRaking = this.props.radioRaking.item;
-    console.log('radioRaking', radioRaking)
-    if (!radioRaking && radioRaking == null) return <Text style={{justifyContent: center}}>加载中...</Text>; 
+    if (!radioRaking) {
+      return <SpinnerLoading/>
+    }
     return (
       <View style={styles.rakingBox}>
         <View style={styles.radioRakingBox}>
@@ -137,7 +139,9 @@ class RaioPage extends PureComponent {
   // 电台精选
   _radioSelect = () => {
     const radio = this.props.radio.item;
-    if (!radio && radio == null) return <Text style={{justifyContent: center}}>加载中...</Text>;
+    if (!radio) {
+      return <SpinnerLoading/>
+    }
     return (
       <View style={styles.rakingBox}>
         <View style={styles.radioRakingBox}>
@@ -177,19 +181,17 @@ class RaioPage extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  radio: state.radio,
-  radioBanner: state.radioBanner,
-  radioRaking: state.radioRaking,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onLoadRadioData: url => dispatch(actions.onLoadRadioData(url)),
-  onRadioBanner: url => dispatch(actions.onRadioBanner(url)),
-  onRadioRaking: url => dispatch(actions.onRadioRaking(url))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RaioPage);
+export default connect(({radio,radioBanner,radioRaking}) => ({radio,radioBanner,radioRaking}), (dispatch) => ({
+  onLoadRadioData(url) {
+    dispatch(actions.onLoadRadioData(url))
+  },
+  onRadioBanner(url) {
+    dispatch(actions.onRadioBanner(url))
+  },
+  onRadioRaking(url) {
+    dispatch(actions.onRadioRaking(url))
+  }
+}))(RaioPage)
 
 const styles = StyleSheet.create({
   container: {
