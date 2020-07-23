@@ -14,12 +14,13 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/index';
-import {personalized} from '../../expand/api';
+import {eventRecommend} from '../../expand/api';
 import {px2dp} from '../../utils/px2dp';
 import {width} from '../../utils/screenUtil';
 import SpinnerLoading from '../../components/Spinner';
 import NavigationUtil  from '../../utils/NavigationUtil'
 import {Toast} from '../../utils/Toast'
+import DeviceStorage from '../../utils/DeviceStorage'
 
 // 每日推荐
 class SingerPage extends React.Component {
@@ -30,14 +31,14 @@ class SingerPage extends React.Component {
   componentDidMount() {
     this.getPeraonaliz();
     this.getRouterParams();
-    this.animated();
   }
   /**
    * 获取数据
    */
-  getPeraonaliz = () => {
+  getPeraonaliz = async () => {
     const {onLoadPersonalizData} = this.props;
-    onLoadPersonalizData(personalized);
+    const token = await DeviceStorage.get('token')
+    onLoadPersonalizData(eventRecommend, token);
   };
   /**
    * 获取上级传参
@@ -46,10 +47,11 @@ class SingerPage extends React.Component {
     const title = this.props.navigation.state.params.title;
     this.setState({title});
   };
-  /**
-   * 渲染动画
-   */
-  animated = () => {};
+
+  goToPlayer=()=> {
+    // NavigationUtil.goPage({}, 'Player')
+  }
+  
   /**
    * 渲染头部
    */
@@ -74,14 +76,26 @@ class SingerPage extends React.Component {
   };
   _renderItem(data) {
     const item = data.item;
-    return   <Animated.View style={styles.personalBox}>
-        <View style={styles.imageBox}>
-          <Image style={styles.image} source={{uri: item.picUrl}} />
-        </View>
-        <Text numberOfLines={1} style={styles.name}>
-          {item.name}
-        </Text>
-      </Animated.View>
+    console.log('imahe', item)
+    return <>
+        <TouchableOpacity activeOpacity={1} onPress={() => this.goToPlayer} style={styles.personalBox}>
+          <View style={styles.imageBox}>
+            <Image style={styles.image} source={{uri: item.al.picUrl}} />
+          </View>
+          <View style={styles.musicDesc}>
+            <Text numberOfLines={1} style={styles.name}>
+              {item.name}
+            </Text>
+            <View style={styles.descBox}>
+              {item.ar.map(n => (
+                <Text style={styles.descName}>{n.name}</Text>
+              ))}
+              <Text style={styles.descName}>-</Text>
+              <Text style={styles.descName}>{item.name}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+    </>  
   }
   /* 渲染列表 */
   _renderList = () => {
@@ -131,8 +145,8 @@ class SingerPage extends React.Component {
 }
 
 export default connect(({personaliz}) => ({personaliz}), (dispatch) => ({
-  onLoadPersonalizData(url) {
-    dispatch(actions.onLoadPersonalizData(url))
+  onLoadPersonalizData(url, token) {
+    dispatch(actions.onLoadPersonalizData(url, token))
   }
 }))(SingerPage)
 
@@ -152,9 +166,9 @@ const styles = StyleSheet.create({
     borderRadius: px2dp(6),
   },
   imageBox: {
-    width: px2dp(40),
-    height: px2dp(40),
-    borderRadius: px2dp(6),
+    width: px2dp(30),
+    height: px2dp(30),
+    borderRadius: px2dp(15),
     overflow: 'hidden',
     alignItems: 'center',
     marginLeft: px2dp(4)
@@ -164,7 +178,7 @@ const styles = StyleSheet.create({
     height: px2dp(60),
   },
   name: {
-    marginLeft: px2dp(10),
+    marginLeft: px2dp(15),
     width: px2dp(260),
   },
   topHeaderBox: {
@@ -207,5 +221,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: px2dp(14),
     color: '#fff'
+  },
+  musicDesc: {
+    marginHorizontal: px2dp(5)
+  },
+  descBox: {
+    flexDirection: 'row',
+    marginHorizontal: px2dp(5),
+    marginTop: px2dp(4)
+  },
+  descName: {
+    fontSize: px2dp(12),
+    color: '#333'
   }
 });

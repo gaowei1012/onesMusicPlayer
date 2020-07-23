@@ -3,6 +3,7 @@ import axios from 'axios';
 import {base_url} from './api';
 
 export function request(url, token) {
+  console.log('**@@$$$token', token)
   return new Promise((resolve, reject) => {
     axios({
       url: url,

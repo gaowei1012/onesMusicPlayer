@@ -19,11 +19,12 @@ export function onLoadRecommendData(url) {
 }
 
 // 推荐歌单
-export function onLoadPersonalizData(url) {
+export function onLoadPersonalizData(url, token) {
   return dispatch => {
-    request(url)
+    request(url, token)
       .then(res => {
-        const data = res.result;
+        const data = res.data.dailySongs;
+        // console.log('每日推荐', data)
         handleData(dispatch, data, types.GET_PERSONALIZ_SUCCESS);
       })
       .catch(err => {
