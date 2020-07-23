@@ -47,11 +47,6 @@ class SingerPage extends React.Component {
     const title = this.props.navigation.state.params.title;
     this.setState({title});
   };
-
-  goToPlayer=()=> {
-    // NavigationUtil.goPage({}, 'Player')
-  }
-  
   /**
    * 渲染头部
    */
@@ -78,7 +73,7 @@ class SingerPage extends React.Component {
     const item = data.item;
     console.log('imahe', item)
     return <>
-        <TouchableOpacity activeOpacity={1} onPress={() => this.goToPlayer} style={styles.personalBox}>
+        <TouchableOpacity activeOpacity={1} onPress={() => NavigationUtil.goPage({item}, 'Player')} style={styles.personalBox}>
           <View style={styles.imageBox}>
             <Image style={styles.image} source={{uri: item.al.picUrl}} />
           </View>
