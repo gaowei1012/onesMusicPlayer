@@ -1,18 +1,14 @@
 import * as React from 'react';
-import UserInfo from './UserInfo';
 import { connect } from 'react-redux';
 import {
   Text,
-  ScrollView,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   Image,
   View,
-  Alert,
 } from 'react-native';
 import {
-  defaultBackgroundColor,
   iosFontFmily,
 } from '../../styles/constants';
 import PersonalItem from './components/PersonlItem';
@@ -25,7 +21,7 @@ import {Toast} from '../../utils/Toast';
 class PersonalPage extends React.PureComponent {
   state = {
     item:{},
-    isLogin: true,
+    isLogin: false,
     user_menu: [
       {
         id: 1,
@@ -66,12 +62,16 @@ class PersonalPage extends React.PureComponent {
     NavigationUtil.goPage({}, com)
   }
 
+  goLoginPage=()=> {
+    NavigationUtil.goPage({}, 'LoginPage')
+  }
+
   _userInfo() {
     return <View style={styles.loginWrap}>
       {this.state.isLogin ? <View style={styles.loginBox}>
         <Image style={styles.avatar} source={{uri: this.state.avatar_url}}/>
         <Text style={styles.loginText}>执念</Text>
-      </View> : <TouchableOpacity activeOpacity={1} onPress={() => null} style={styles.notLoginBox}>
+      </View> : <TouchableOpacity activeOpacity={1} onPress={this.goLoginPage} style={styles.notLoginBox}>
         <Image style={styles.avatar} source={{uri: this.state.avatar_url}}/>
         <View style={styles.loginBtn}>
           <Text style={styles.nowLoginText}>立即登录</Text>
@@ -143,10 +143,8 @@ class PersonalPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({});
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PersonalPage);
+export default connect(({}) => ({}), 
+(dispatch) => ({}))(PersonalPage)
 
 const styles = StyleSheet.create({
   container: {
