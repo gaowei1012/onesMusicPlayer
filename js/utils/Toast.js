@@ -9,11 +9,11 @@ const Toast = {
     showToast: (msg) => {
         this.toast = RootToast.show(msg, {
             position: 0,
-            duration: 300
+            duration: 1000
         })
         setTimeout(() => {
             RootToast.hide(toast)
-        }, 300)
+        }, 1000)
     },
 
     showLog: (msg) => {

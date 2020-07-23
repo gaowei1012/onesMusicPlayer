@@ -7,18 +7,22 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  Animated
 } from 'react-native';
 import {center, row, spaceBetween} from '../../styles/constants';
 import NavigationUtil from '../../utils/NavigationUtil';
 import {px2dp} from '../../utils/px2dp';
-export default class SearchItem extends React.Component {
+import {Toast} from '../../utils/Toast';
+
+export default class SearchItem extends React.PureComponent {
   renderTextInput() {
     return <View style={styles.textInput}>
-      <Text>搜索</Text>
+      <Text style={styles.desc}>搜索</Text>
     </View>;
   }
   goToNoticePage = () => {
-    NavigationUtil.goPage({}, 'NoticesPage');
+    // NavigationUtil.goPage({}, 'NoticesPage');
+    Toast.showToast('功能开发中')
   };
   goToMuiscPage = () => {
     NavigationUtil.goPage({}, 'Player');
@@ -29,7 +33,7 @@ export default class SearchItem extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity activeOpacity={.8} onPress={this.goToNoticePage}>
+        <TouchableOpacity activeOpacity={1} onPress={this.goToNoticePage}>
           <Image
             style={styles.notice}
             source={require('../../images/common/notice.png')}
@@ -60,22 +64,26 @@ const styles = StyleSheet.create({
     alignItems: center,
   },
   notice: {
-    width: px2dp(25),
-    height: px2dp(25),
+    width: px2dp(22),
+    height: px2dp(22),
   },
   music: {
-    width: px2dp(25),
-    height: px2dp(25),
+    width: px2dp(22),
+    height: px2dp(22),
   },
   inputBox: {
     width: px2dp(280),
     backgroundColor: '#eee',
-    borderRadius: px2dp(36),
+    borderRadius: px2dp(30),
   },
   textInput: {
     width: px2dp(260),
-    height: px2dp(36),
+    height: px2dp(30),
     marginLeft: px2dp(10),
     justifyContent: center,
   },
+  desc: {
+    color: '#333',
+    fontSize: px2dp(12)
+  }
 });
