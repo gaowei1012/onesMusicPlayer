@@ -11,6 +11,7 @@ import {px2dp} from '../../utils/px2dp';
 import Swiper from 'react-native-swiper';
 import NavigationUtil from '../../utils/NavigationUtil';
 import SpinnerLoading from '../../components/Spinner';
+import {Toast} from '../../utils/Toast';
 
 class RaioPage extends PureComponent {
   state = {
@@ -40,7 +41,8 @@ class RaioPage extends PureComponent {
   };
 
   goToPage = (com) => {
-    NavigationUtil.goPage({}, com)
+    // NavigationUtil.goPage({}, com)
+    Toast.showToast('功能开发中...')
   }
 
   goToMorePage = (id) => {
