@@ -26,6 +26,7 @@ import {GoBack} from '../../utils/GoBack';
 import {width} from '../../utils/screenUtil';
 import SpinnerLoading from '../../components/Spinner';
 import NavigationUtil  from '../../utils/NavigationUtil'
+import {Toast} from '../../utils/Toast'
 
 // 每日推荐
 class SingerPage extends React.Component {
@@ -106,14 +107,17 @@ class SingerPage extends React.Component {
       <View style={styles.contentTopBox}>
         <TouchableOpacity
           activeOpacity={1}
-          style={{flexDirection: 'row',alignItems: 'center'}}>
+          style={{flexDirection: 'row',alignItems: 'center'}}
+          onPress={() => Toast.showToast('功能开发中')}
+          >
           <Image style={{width: px2dp(18), height: px2dp(18), marginRight: px2dp(3)}} source={require('../../images/player.png')}/>
-          <Text>全部播放</Text>
+          <Text style={styles.textDesc}>全部播放</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
+          onPress={() => Toast.showToast('功能开发中')}
         >
-          <Text>多选</Text>
+          <Text style={styles.textDesc}>多选</Text>
         </TouchableOpacity>
       </View>
     )
@@ -204,5 +208,9 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 888,
     height: px2dp(530)
+  },
+  textDesc: {
+    fontSize: px2dp(12),
+    color: '#333'
   }
 });
