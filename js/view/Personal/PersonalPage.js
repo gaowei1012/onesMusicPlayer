@@ -17,6 +17,7 @@ import { px2dp } from '../../utils/px2dp';
 import NavigationUtil from '../../utils/NavigationUtil';
 import SettingItem from './components/SettingItem';
 import {Toast} from '../../utils/Toast';
+import DeviceStorage from '../../utils/DeviceStorage'
 
 class PersonalPage extends React.PureComponent {
   state = {
@@ -56,6 +57,9 @@ class PersonalPage extends React.PureComponent {
     this.setState({
       item:item.profile
     })
+   let token = await DeviceStorage.get('token')
+   console.log('token', token)
+    
   }
 
   goToPage=(com)=> {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -18,11 +18,17 @@ import MusicButton from '../../components/Button';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions/index';
 // import Storage from 'react-native-storage';
-import AsyncStorage from '@react-native-community/async-storage';
 import NavigationUtil from '../../utils/NavigationUtil';
 import { px2dp } from '../../utils/px2dp';
+import DeviceStorage from '../../utils/DeviceStorage'
+import {Toast} from '../../utils/Toast'
 
-class LoginPage extends React.Component {
+/**
+ * 暂定只能使用手机号登录
+ *  没有注册功能
+ *  微信登录暂时没有
+ */
+class LoginPage extends React.PureComponent {
   state = {
     count: 60,
     liked: true,
@@ -59,7 +65,7 @@ class LoginPage extends React.Component {
   }
 
   // 登录
-  getData() {
+  handleSubmit = () => {
     const { onLoginData } = this.props;
     const { phone, password } = this.state;
     const url = `login/cellphone?phone=${phone}&password=${password}`;
@@ -67,25 +73,21 @@ class LoginPage extends React.Component {
     const item = this.props.token.item;
     if (!item) {
       // TODO: 弹框-->正在登录中
-      return <div>正在登录中</div>;
+      return Toast.showToast('等待中,请稍后!')
     }
-    AsyncStorage.setItem('token', item.token, err => {
-      if (err) err;
-
-      // 登录成功后跳转
-      setTimeout(() => {
-        // 带参跳转页面
-        NavigationUtil.goPage({ item }, 'PersonalPage');
-      }, 1000);
-    });
+    DeviceStorage.save('token', item.token)
+      .then(res => {
+        Toast.showToast('登录成功!')
+        setTimeout(() => {
+          NavigationUtil.goBack(this.props.navigation)
+        }, 1000)
+      })
   }
   // 发送验证码
   getCode = () => {
     this.countDown();
   };
-  handleSubmit = () => {
-    this.getData();
-  };
+
   handleKeyPress = () => { };
   handleCodePress = () => { };
   renderTopTitle() {
@@ -110,6 +112,7 @@ class LoginPage extends React.Component {
               clearTextOnFocus={true}
               placeholder='密码'
               placeholderTextColor='#fff'
+              secureTextEntry={true}
             />
             {/* <TouchableOpacity onPress={this.getCode} style={styles.codeNumBox}>
               <Text style={styles.textInput}>
@@ -130,7 +133,10 @@ class LoginPage extends React.Component {
           onPress={this.handleSubmit}
           buttonStyle={styles.submitBox}
         /> */}
-        <MusicButton text={'登录'}/>
+        <MusicButton
+          text={'登录'}
+          handleFunctuin={this.handleSubmit}
+        />
       </View>
     );
   }
@@ -142,6 +148,7 @@ class LoginPage extends React.Component {
     );
   }
 }
+
 
 const mapStateToProps = state => ({
   token: state.login,

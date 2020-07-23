@@ -1,22 +1,24 @@
 import React from 'react'
-import {View,Text,TouchableOpacity,StyleSheet,StyleProp} from 'react-native'
+import {Text,TouchableOpacity,StyleSheet} from 'react-native'
 import PropTypes from 'prop-types'
 import { px2dp } from '../utils/px2dp'
 
-export default class MusicButton extends React.Component {
-    static propTypes = {
-        text: PropTypes.string,
-        style: PropTypes.object,
-        function: PropTypes.func
-    }
-
-    render() {
-        return (<TouchableOpacity activeOpacity={1} onPress={this.props.function} 
-            style={[styles.btn, this.props.style]}>
-            <Text style={styles.text}>{this.props.text}</Text>
-        </TouchableOpacity>)
-    }
+function MusicButton({text, style, handleFunctuin}) {
+    return (
+        <TouchableOpacity activeOpacity={1} onPress={handleFunctuin} 
+            style={[styles.btn, style]}>
+            <Text style={styles.text}>{text}</Text>
+        </TouchableOpacity>
+    )
 }
+
+MusicButton.propTypes = {
+    text: PropTypes.string,
+    style: PropTypes.object,
+    function: PropTypes.func
+}
+
+export default MusicButton
 
 const styles = StyleSheet.create({
     btn: {
