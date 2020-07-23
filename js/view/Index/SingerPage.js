@@ -67,7 +67,8 @@ class SingerPage extends React.Component {
         >
           <Image style={{width: px2dp(24), height: px2dp(24)}}  source={require('../../images/back.png')}/>
         </TouchableOpacity>
-        {/* <Text>right</Text> */}
+        <Text style={styles.title}>每日推荐</Text>
+        <Text/>
       </View>
     </ImageBackground>
   };
@@ -202,5 +203,9 @@ const styles = StyleSheet.create({
   textDesc: {
     fontSize: px2dp(12),
     color: '#333'
+  },
+  title: {
+    fontSize: px2dp(14),
+    color: '#fff'
   }
 });
