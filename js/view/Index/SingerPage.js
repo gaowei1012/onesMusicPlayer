@@ -7,22 +7,15 @@ import {
   StyleSheet,
   Animated,
   ScrollView,
-  RefreshControl,
+  FlatList,
   ImageBackground,
   Platform,
   TouchableOpacity
 } from 'react-native';
-import {
-  flex,
-  row,
-  center,
-  defaultBackgroundColor,
-} from '../../styles/constants';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/index';
 import {personalized} from '../../expand/api';
 import {px2dp} from '../../utils/px2dp';
-import {GoBack} from '../../utils/GoBack';
 import {width} from '../../utils/screenUtil';
 import SpinnerLoading from '../../components/Spinner';
 import NavigationUtil  from '../../utils/NavigationUtil'
@@ -78,6 +71,17 @@ class SingerPage extends React.Component {
       </View>
     </ImageBackground>
   };
+  _renderItem(data) {
+    const item = data.item;
+    return   <Animated.View style={styles.personalBox}>
+        <View style={styles.imageBox}>
+          <Image style={styles.image} source={{uri: item.picUrl}} />
+        </View>
+        <Text numberOfLines={1} style={styles.name}>
+          {item.name}
+        </Text>
+      </Animated.View>
+  }
   /* 渲染列表 */
   _renderList = () => {
     const personaliz = this.props.personaliz.item;
@@ -85,20 +89,10 @@ class SingerPage extends React.Component {
       return <SpinnerLoading/>
     }
     return (
-      <ScrollView>
-        {personaliz.map(item => {
-          return (
-            <Animated.View style={styles.personalBox}>
-              <View style={styles.imageBox}>
-                <Image style={styles.image} source={{uri: item.picUrl}} />
-              </View>
-              <Text numberOfLines={1} style={styles.name}>
-                {item.name}
-              </Text>
-            </Animated.View>
-          )
-        })}
-      </ScrollView>
+      <FlatList
+        data={personaliz}
+        renderItem={this._renderItem}
+      />
     )
   }
   // 全部播放
@@ -135,29 +129,25 @@ class SingerPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  personaliz: state.personaliz,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onLoadPersonalizData: url => dispatch(actions.onLoadPersonalizData(url)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SingerPage);
+export default connect(({personaliz}) => ({personaliz}), (dispatch) => ({
+  onLoadPersonalizData(url) {
+    dispatch(actions.onLoadPersonalizData(url))
+  }
+}))(SingerPage)
 
 const styles = StyleSheet.create({
   container: {
-    flex: flex,
+    flex: 1,
   },
   personalBox: {
     width: px2dp(345),
     height: px2dp(45),
-    alignSelf: center,
+    alignSelf: 'center',
     marginTop: px2dp(4),
     // backgroundColor: defaultBackgroundColor,
     marginBottom: px2dp(2),
-    flexDirection: row,
-    alignItems: center,
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: px2dp(6),
   },
   imageBox: {
