@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity,FlatList} from 'react-native';
-import {flex, center, row} from '../../styles/constants';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/index';
 import {rakingListDeatil} from '../../expand/api';
@@ -42,17 +41,15 @@ class RankingPage extends React.Component {
       />
     );
   };
-  /**
-   * 跳转对应详情页
-   */
-  goToPage(id) {
-    NavigationUtil.goPage({id}, 'RankingDetail');
-  }
+
   _renderItem(data) {
-    const item = data.item
+    const item = data.item;
+    const id = item.id;
     return <TouchableOpacity
         key={item.id}
-        onPress={() => this.goToPage(item.id)}
+        onPress={() => {
+          NavigationUtil.goPage({id}, 'RankingDetail')
+        }}
         style={styles.rankingBox}>
         <View style={styles.leftBox}>
           <Image style={styles.image} source={{uri: item.coverImgUrl}} />
@@ -97,15 +94,15 @@ export default connect(({topList}) => ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: flex,
+    flex: 1,
   },
   rankingBox: {
     width: px2dp(345),
     height: px2dp(120),
-    alignSelf: center,
+    alignSelf: 'center',
     // backgroundColor: '#eee',
-    alignItems: center,
-    flexDirection: row,
+    alignItems: 'center',
+    flexDirection: 'row',
     marginBottom: px2dp(2),
   },
   leftBox: {
@@ -123,8 +120,8 @@ const styles = StyleSheet.create({
     marginLeft: px2dp(20),
     height: px2dp(100),
     width: px2dp(200),
-    alignItems: center,
-    justifyContent: center,
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: px2dp(2),
   },
   text: {

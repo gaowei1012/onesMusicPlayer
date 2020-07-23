@@ -15,6 +15,9 @@ import {Toast} from '../../utils/Toast'
 class RankingDetail extends PureComponent {
   constructor(props) {
     super(props)
+    this.state = {
+      title: null
+    }
   }
   componentDidMount() {
     this.getRankingDetailData()
@@ -43,10 +46,8 @@ class RankingDetail extends PureComponent {
           >
             <Image style={{width: px2dp(24), height: px2dp(24)}} source={require('../../images/back.png')}/>
           </TouchableOpacity>
-          <Text style={styles.title}>排行榜</Text>
-          <View>
-            <Text>pl</Text>
-          </View>
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.shard}>分享</Text>
         </View>
         <View style={styles.nameWrap}>
           <Text style={styles.name}>{item.name}</Text>
@@ -110,7 +111,6 @@ class RankingDetail extends PureComponent {
     />
   }
   render() {
-    const item = this.props.rankiglist;
     return <View style={styles.container}>
       {this._topBar()}
       <View style={styles.contentBox}>
@@ -207,5 +207,9 @@ const styles = StyleSheet.create({
   textall: {
     color: '#333',
     fontSize: px2dp(12)
+  },
+  shard: {
+    fontSize: px2dp(12),
+    color: '#fff'
   }
 })
