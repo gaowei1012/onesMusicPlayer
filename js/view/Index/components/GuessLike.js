@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import actions from '../../../redux/actions/index';
 import {
@@ -7,27 +7,27 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  FlatList,
-  RefreshControl,
+  FlatList
 } from 'react-native';
 import {screentWidth} from '../../../utils/screenUtil';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {
-  flex,
   row,
   center,
   iosFontFmily,
   defaultFontColor,
   defaultFontSize,
   spaceBetween,
-  spaceAround,
   fontColor,
   fontSmallSize,
 } from '../../../styles/constants';
 import {personalizedNewsong} from '../../../expand/api';
 import SpinnerLoading from '../../../components/Spinner';
+import { px2dp } from '../../../utils/px2dp';
 
-class GuessLikePage extends React.Component {
+
+// 今日推荐
+class GuessLikePage extends React.PureComponent {
   async componentDidMount() {
     this.getData();
   }
@@ -43,13 +43,6 @@ class GuessLikePage extends React.Component {
     return (
       <View style={styles.topBox}>
         <Text style={styles.topTitle}>今日推荐</Text>
-        {/* <TouchableOpacity onPress={this.goToMore} style={styles.topMoreBox}>
-          <Text style={styles.moreText}>更多</Text>
-          <Image
-            style={styles.arrow}
-            source={require('../../../images/common/arrow.png')}
-          />
-        </TouchableOpacity> */}
       </View>
     );
   };
@@ -59,6 +52,23 @@ class GuessLikePage extends React.Component {
   goGuessLikePage = () => {
     NavigationUtil.goPage({title: '猜你喜欢'}, 'Player');
   };
+  _renderItem(data) {
+    const item = data.item;
+    // console.log('item--##__##', item)
+    return <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => this.goGuessLikePage(item)}
+        key={item.id}
+        style={styles.guessBox}>
+          <View style={styles.guessImageBox}>
+            <Image source={{uri: item.picUrl}} style={styles.guessImage} />
+          </View>
+          <View style={styles.guessDesBox}>
+            <Text style={styles.guessTitle}>{item.name}</Text>
+            <Text style={styles.guessDes}>{item.des}</Text>
+          </View>
+      </TouchableOpacity>
+  }
   /**
    * 渲染推荐喜欢列表
    */
@@ -69,23 +79,15 @@ class GuessLikePage extends React.Component {
     }
     return (
       <>
-        {recommend  && recommend.map(item=> {
+        <FlatList
+          data={recommend}
+          renderItem={this._renderItem}
+        />
+        {/* {recommend  && recommend.map(item=> {
           return (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => this.goGuessLikePage(item)}
-              key={item.id}
-              style={styles.guessBox}>
-              <View style={styles.guessImageBox}>
-                <Image source={{uri: item.picUrl}} style={styles.guessImage} />
-              </View>
-              <View style={styles.guessDesBox}>
-                <Text style={styles.guessTitle}>{item.name}</Text>
-                <Text style={styles.guessDes}>{item.des}</Text>
-              </View>
-            </TouchableOpacity>
+            
           )
-        })}
+        })} */}
       </>
     );
   };
@@ -99,23 +101,19 @@ class GuessLikePage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  recommend: state.recommend,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onLoadRecommendData: url => dispatch(actions.onLoadRecommendData(url)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GuessLikePage);
+export default connect(({recommend}) => ({recommend}), (dispatch) => ({
+  onLoadRecommendData(url) {
+    dispatch(actions.onLoadRecommendData(url))
+  }
+}))(GuessLikePage)
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: px2dp(10),
   },
   topBox: {
-    marginLeft: 6,
-    marginRight: 6,
+    width: px2dp(360),
+    alignSelf: 'center',
     flexDirection: row,
     justifyContent: spaceBetween,
   },
@@ -139,7 +137,7 @@ const styles = StyleSheet.create({
   },
   guessBox: {
     width: screentWidth,
-    height: 120,
+    height: px2dp(120),
     //backgroundColor: '#eee',
     flexDirection: row,
   },
