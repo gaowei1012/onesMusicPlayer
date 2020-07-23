@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity,FlatList} from 'react-native';
 import {flex, center, row} from '../../styles/constants';
 import {connect} from 'react-redux';
 import actions from '../../redux/actions/index';
@@ -9,7 +9,6 @@ import {GoBack} from '../../utils/GoBack';
 import {px2dp} from '../../utils/px2dp';
 import NavigationUtil from '../../utils/NavigationUtil';
 import SpinnerLoading from '../../components/Spinner';
-import {width} from '../../utils/screenUtil'
 
 // 排行榜
 class RankingPage extends React.Component {
@@ -49,44 +48,40 @@ class RankingPage extends React.Component {
   goToPage(id) {
     NavigationUtil.goPage({id}, 'RankingDetail');
   }
-
+  _renderItem(data) {
+    const item = data.item
+    return <TouchableOpacity
+        key={item.id}
+        onPress={() => this.goToPage(item.id)}
+        style={styles.rankingBox}>
+        <View style={styles.leftBox}>
+          <Image style={styles.image} source={{uri: item.coverImgUrl}} />
+          {/* <LazyloadImage
+            style={styles.image}
+            source={{uri: item.coverImgUrl}}
+          /> */}
+        </View>
+        <View style={styles.rightBox}>
+          <Text style={styles.text}>{item.description}</Text>
+        </View>
+    </TouchableOpacity>
+  }
   _renderContent = () => {
     const toplist = this.props.topList.item;
     if (!toplist) {
       return <SpinnerLoading/>
     }
-    return (
-      <>
-        {toplist && toplist.map(item => {
-          return (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => this.goToPage(item.id)}
-              style={styles.rankingBox}>
-              <View style={styles.leftBox}>
-                <Image style={styles.image} source={{uri: item.coverImgUrl}} />
-                {/* <LazyloadImage
-                  style={styles.image}
-                  source={{uri: item.coverImgUrl}}
-                /> */}
-              </View>
-              <View style={styles.rightBox}>
-                <Text style={styles.text}>{item.description}</Text>
-              </View>
-            </TouchableOpacity>
-          )
-        })}
-      </>
-    )
+    return <FlatList
+          data={toplist}
+          renderItem={this._renderItem}
+        />
   }
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
         {this._renderTopBar()}
-        <ScrollView>
-          {this._renderContent()}
-        </ScrollView>
+        {this._renderContent()}
       </SafeAreaView>
     );
   }
@@ -99,16 +94,6 @@ export default connect(({topList}) => ({
     dispatch(actions.onLoadTopListData(url))
   },
 }))(RankingPage)
-
-// const mapStateToProps = state => ({
-//   topList: state.topList,
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   onLoadTopListData: url => dispatch(actions.onLoadTopListData(url)),
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(RankingPage);
 
 const styles = StyleSheet.create({
   container: {
