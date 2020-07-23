@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import actions from '../../redux/actions';
 import SpinnerLoading from '../../components/Spinner';
 import { FlatList } from 'react-native-gesture-handler';
+import {Toast} from '../../utils/Toast'
 
 class RankingDetail extends PureComponent {
   constructor(props) {
@@ -58,14 +59,17 @@ class RankingDetail extends PureComponent {
       <View style={styles.contentTopBox}>
         <TouchableOpacity
           activeOpacity={1}
-          style={{flexDirection: 'row',alignItems: 'center'}}>
+          style={{flexDirection: 'row',alignItems: 'center'}}
+          onPress={() => Toast.showToast('功能开发中')}
+          >
           <Image style={{width: px2dp(18), height: px2dp(18), marginRight: px2dp(3)}} source={require('../../images/player.png')}/>
-          <Text>全部播放</Text>
+          <Text style={styles.textall}>全部播放</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
+          onPress={() => Toast.showToast('功能开发中')}
         >
-          <Text>添加收藏</Text>
+          <Text style={styles.textall}>添加收藏</Text>
         </TouchableOpacity>
       </View>
     )
@@ -199,5 +203,9 @@ const styles = StyleSheet.create({
   textSmal: {
     color: '#333',
     fontSize: px2dp(10)
+  },
+  textall: {
+    color: '#333',
+    fontSize: px2dp(12)
   }
 })
