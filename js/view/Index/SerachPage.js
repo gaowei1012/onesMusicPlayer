@@ -100,15 +100,6 @@ class SearchPage extends PureComponent {
 
     render() {
         const {data} = this.state;
-        const searchSubmit = (
-            <TouchableOpacity
-                style={styles.searchSubmit}
-                activeOpacity={1}
-                onPress={this.handleSubmit}
-            >
-                <Text style={styles.searchText}>🔍</Text>
-            </TouchableOpacity>
-        )
         // 搜索历史记录
         const searchHistory = (
             <View style={styles.searchHistory}>
