@@ -8,13 +8,27 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    Image
+    Image,
+    Alert
 } from 'react-native'
 import NavigationUtil from '../../utils/NavigationUtil'
 
 import {connect} from 'react-redux'
 import actions from '../../redux/actions'
 import {Toast} from '../../utils/Toast'
+import PlayerItems from './components/PlayerItems'
+
+import LikeIcon from '../../images/svg/like.svg'
+import DowloadIcon from '../../images/svg/dowload.svg'
+import HuaIcon from '../../images/svg/hua.svg'
+import MessageIcon from '../../images/svg/message.svg'
+import MoreIcon  from '../../images/svg/more.svg'
+import ShuaIcon from '../../images/svg/shua.svg'
+import PrevIcon from '../../images/svg/prev.svg'
+import MIcon from '../../images/svg/m.svg'
+import NextIcon from '../../images/svg/next.svg'
+import ZanIcon from '../../images/svg/zan.svg'
+import PlayerIcon from '../../images/svg/player.svg'
 
 class Player extends React.PureComponent {
     constructor(props) {
@@ -126,7 +140,6 @@ class Player extends React.PureComponent {
     }
 
     render() {
-        const {iconItem, iconFotter} = this.state
         const topHeader = (
             <View style={styles.topHeader}>
                 <TouchableOpacity
@@ -142,7 +155,7 @@ class Player extends React.PureComponent {
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         {
                             this.state.ar.map(d => (
-                                <Text style={styles.name} key={d.id}>{d.name}</Text>
+                                <Text style={styles.name} numberOfLines={1} key={d.id}>{d.name}</Text>
                             ))
                         }
                     </View>
@@ -169,11 +182,26 @@ class Player extends React.PureComponent {
         // 播放喜欢列表
         const likeMeunItem = (
             <View style={styles.likeItemBox}>
-                {iconItem && iconItem.map(item => (
-                    <TouchableOpacity style={styles.imgBox} activeOpacity={1} key={item.id}>
-                        <Image style={{width: '100%', height: '100%'}} source={item.icon} />
-                    </TouchableOpacity>
-                ))}
+                <PlayerItems
+                    icon={<LikeIcon width={px2dp(26)} height={26}/>}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
+                />
+                <PlayerItems
+                    icon={<DowloadIcon width={px2dp(26)} height={26}/>}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
+                />
+                <PlayerItems
+                    icon={<HuaIcon width={px2dp(26)} height={26}/>}
+                    handleFunc={() => null}
+                />
+                <PlayerItems
+                    icon={<MessageIcon width={px2dp(26)} height={26}/>}
+                    handleFunc={() => null}
+                />
+                <PlayerItems
+                    icon={<MoreIcon width={px2dp(26)} height={26}/>}
+                    handleFunc={() => null}
+                />
             </View>
         );
         // 进度条
@@ -198,7 +226,7 @@ class Player extends React.PureComponent {
         // 底部播放
         const playerFotter = (
             <View style={styles.playerFooterBox}>
-                {iconFotter && iconFotter.map(item => (
+                {/* {iconFotter && iconFotter.map(item => (
                     <TouchableOpacity onPress={this.switchPlayer} activeOpacity={.9} key={item.id} style={styles.fotterImgBox}>
                         {
                             item.className == 'icon' ? 
@@ -207,7 +235,27 @@ class Player extends React.PureComponent {
                                 <Image style={{width: px2dp(50), height: px2dp(50)}} source={item.icon}/>
                         }
                     </TouchableOpacity>
-                ))}
+                ))} */}
+                <PlayerItems
+                    icon={<ShuaIcon width={26} height={26}/>}
+                    handleFunc={() => null}
+                />
+                 <PlayerItems
+                    icon={<PrevIcon width={26} height={26}/>}
+                    handleFunc={() => null}
+                />
+                <PlayerItems
+                    icon={<PlayerIcon width={26} height={26}/>}
+                    handleFunc={() => null}
+                />
+                <PlayerItems
+                    icon={<NextIcon width={26} height={26}/>}
+                    handleFunc={() => null}
+                />
+                <PlayerItems
+                    icon={<MIcon width={26} height={26}/>}
+                    handleFunc={() => null}
+                />
             </View>
         );
         return (
@@ -312,7 +360,7 @@ const styles = StyleSheet.create({
         color: '#ddd',
         fontSize: px2dp(12),
         marginTop: px2dp(3),
-        marginRight: px2dp(3)
+        marginRight: px2dp(3),
     },
     titleBox: {
         flexDirection: 'column',
@@ -322,5 +370,10 @@ const styles = StyleSheet.create({
         fontSize: px2dp(16),
         fontWeight: '600',
         color: '#fff'
+    },
+    svgStyles: {
+        width: px2dp(22),
+        height: px2dp(22),
+        backgroundColor: 'red',
     }
 })

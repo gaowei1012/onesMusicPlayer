@@ -12,14 +12,15 @@ function PlayerItems({icon, handleFunc}) {
         <TouchableOpacity
             style={styles.playerItemBox}
             onPress={handleFunc}
+            activeOpacity={1}
         >
-            <Image style={styles.image} source={require(icon)}/>
+            {icon}
         </TouchableOpacity>
     )
 }
 
 PlayerItems.propTypes = {
-    icon: PropTypes.string,
+    icon: PropTypes.element,
     handleFunc: PropTypes.func
 }
 
@@ -27,10 +28,8 @@ export default PlayerItems
 
 const styles = StyleSheet.create({
     playerItemBox: {
-        flexDirection: 'column'
-    },
-    image: {
+        flexDirection: 'column',
         width: px2dp(24),
-        height: px2dp(24)
+        height: px2dp(24),
     }
 })
