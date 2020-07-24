@@ -8,8 +8,7 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    Image,
-    Alert
+    Image
 } from 'react-native'
 import NavigationUtil from '../../utils/NavigationUtil'
 
@@ -17,6 +16,7 @@ import {connect} from 'react-redux'
 import actions from '../../redux/actions'
 import {Toast} from '../../utils/Toast'
 import PlayerItems from './components/PlayerItems'
+import RNFS from 'react-native-fs'
 
 import LikeIcon from '../../images/svg/like.svg'
 import DowloadIcon from '../../images/svg/dowload.svg'
@@ -62,6 +62,7 @@ class Player extends React.PureComponent {
             ar: [],
             id: null, // 歌曲id
             backgroundUrl: null,
+            isPlayer: true,
         }
     }
 
@@ -135,8 +136,13 @@ class Player extends React.PureComponent {
         />
     }
 
+    /**
+     * 切换是否播放 暂停
+     */
     switchPlayer=()=> {
-        
+        this.setState({
+            isPlayer: !this.state.isPlayer
+        })
     }
 
     render() {
@@ -160,7 +166,10 @@ class Player extends React.PureComponent {
                         }
                     </View>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {Toast.showToast('功能开发中')}}
+                >
                     <Text>分享</Text>
                 </TouchableOpacity>
             </View>
@@ -192,15 +201,15 @@ class Player extends React.PureComponent {
                 />
                 <PlayerItems
                     icon={<HuaIcon width={px2dp(26)} height={26}/>}
-                    handleFunc={() => null}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
                 />
                 <PlayerItems
                     icon={<MessageIcon width={px2dp(26)} height={26}/>}
-                    handleFunc={() => null}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
                 />
                 <PlayerItems
                     icon={<MoreIcon width={px2dp(26)} height={26}/>}
-                    handleFunc={() => null}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
                 />
             </View>
         );
@@ -238,23 +247,23 @@ class Player extends React.PureComponent {
                 ))} */}
                 <PlayerItems
                     icon={<ShuaIcon width={26} height={26}/>}
-                    handleFunc={() => null}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
                 />
                  <PlayerItems
                     icon={<PrevIcon width={26} height={26}/>}
-                    handleFunc={() => null}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
                 />
                 <PlayerItems
-                    icon={<PlayerIcon width={26} height={26}/>}
-                    handleFunc={() => null}
+                    icon={this.state.isPlayer ? <ZanIcon width={26} height={26}/> : <PlayerIcon width={26} height={26}/>}
+                    handleFunc={this.switchPlayer}
                 />
                 <PlayerItems
                     icon={<NextIcon width={26} height={26}/>}
-                    handleFunc={() => null}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
                 />
                 <PlayerItems
                     icon={<MIcon width={26} height={26}/>}
-                    handleFunc={() => null}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
                 />
             </View>
         );
