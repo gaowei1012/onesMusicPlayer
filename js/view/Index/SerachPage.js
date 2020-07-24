@@ -54,21 +54,6 @@ class SearchPage extends PureComponent {
         )
     }
 
-    topnavigationbar = () => {
-        const statusbar = {
-            backgroundColor: '#ffffff',
-            barStyle: 'dark-content',
-          };
-          return (
-            <TopNavigationBar
-              title={'搜索'}
-              statusBar={statusbar}
-              style={{backgroundColor: '#ffffff'}}
-              leftButton={GoBack(this.props, 'dark')}
-            />
-        );
-    }
-
     // 搜索
     onChangeText(value) {
         this.setState({
