@@ -1,6 +1,15 @@
 import React, {PureComponent} from 'react'
 import TopNavigationBar from '../../common/TopNavigationBar'
-import {SafeAreaView, View, Text, StyleSheet, TextInput, Image, TouchableOpacity, FlatList, Alert} from 'react-native'
+import {
+    SafeAreaView,
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    Image,
+    TouchableOpacity,
+    FlatList
+} from 'react-native'
 import actions from '../../redux/actions'
 import {connect} from 'react-redux'
 import {search} from '../../expand/api'
@@ -22,6 +31,27 @@ class SearchPage extends PureComponent {
             return false
         }
         return true
+    }
+
+    _renderTopBar =()=> {
+        return (
+            <View style={styles.topWrap}>
+                <TouchableOpacity>
+                    <Image style={styles.back} source={require('../../images/common/back.png')} />
+                </TouchableOpacity>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={value => this.onChangeText(value)}
+                    clearTextOnFocus={true}
+                    placeholder='搜索'
+                    onKeyPress={this.handleSearch}
+                    blurOnSubmit={false}
+                />
+                <TouchableOpacity>
+                    <Text style={styles.colse}>取消</Text>
+                </TouchableOpacity>
+            </View>
+        )
     }
 
     topnavigationbar = () => {
@@ -115,43 +145,32 @@ class SearchPage extends PureComponent {
 
         return (
             <SafeAreaView style={styles.container}>
-                {this.topnavigationbar()}
-                {searchInput}
-                {/* {searchHistory} */}
-                {/* <ScrollView>
-                    {searchContent}
-                </ScrollView> */}
+                {this._renderTopBar()}
                 {this._flatlist()}
             </SafeAreaView>
         )
     }
 }
 
-const mapStateToProps = state => ({
-    search: state.search,
-})
-
-const mapDispatchToProps = dispatch => ({
-    onLoadSearchData: url => dispatch(actions.onLoadSearchData(url))
-})
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SearchPage)
+export default connect(({search}) => ({search}), (dispatch) => ({
+    onLoadSearchData(url) {
+        dispatch(actions.onLoadSearchData(url))
+    }
+}))(SearchPage)
 
 const styles = StyleSheet.create({
     container: {
         flex: 1
     },
     textInput: {
-        width: px2dp(305),
+        width: px2dp(280),
         alignSelf: 'center',
-        height: px2dp(36),
-        borderRightWidth: px2dp(.5),
-        borderRightColor: '#eee',
-        paddingHorizontal: px2dp(6)
-        // backgroundColor: 'red'
+        height: px2dp(30),
+        borderWidth: px2dp(.5),
+        borderColor: '#ddd',
+        paddingHorizontal: px2dp(8),
+        marginHorizontal: px2dp(6),
+        borderRadius: px2dp(15)
     },
     searchHistory: {
         marginTop: px2dp(10),
@@ -213,6 +232,22 @@ const styles = StyleSheet.create({
     },
     searchText: {
 
+    },
+    topWrap: {
+        marginTop: px2dp(10),
+        width: px2dp(345),
+        alignSelf: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    back: {
+        width: px2dp(18),
+        height: px2dp(18),
+    },
+    colse: {
+        color: '#d3d3d3',
+        fontSize: px2dp(14)
     }
 
 })
