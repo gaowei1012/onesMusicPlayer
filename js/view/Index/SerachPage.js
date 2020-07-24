@@ -16,6 +16,7 @@ import {search} from '../../expand/api'
 
 import {px2dp} from '../../utils/px2dp'
 import {GoBack} from '../../utils/GoBack'
+import NavigationUtil from '../../utils/NavigationUtil'
 
 class SearchPage extends PureComponent {
     state = {
@@ -36,7 +37,12 @@ class SearchPage extends PureComponent {
     _renderTopBar =()=> {
         return (
             <View style={styles.topWrap}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
+                        NavigationUtil.goBack(this.props.navigation)
+                    }}
+                >
                     <Image style={styles.back} source={require('../../images/common/back.png')} />
                 </TouchableOpacity>
                 <TextInput
@@ -102,19 +108,6 @@ class SearchPage extends PureComponent {
             >
                 <Text style={styles.searchText}>🔍</Text>
             </TouchableOpacity>
-        )
-        const searchInput = (
-            <View style={styles.searchInputBox}>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={value => this.onChangeText(value)}
-                    clearTextOnFocus={true}
-                    placeholder='搜索'
-                    onKeyPress={this.handleSearch}
-                    blurOnSubmit={false}
-                />
-                {searchSubmit}
-            </View>
         )
         // 搜索历史记录
         const searchHistory = (
