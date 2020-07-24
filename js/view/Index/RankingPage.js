@@ -99,11 +99,11 @@ const styles = StyleSheet.create({
   rankingBox: {
     width: px2dp(345),
     height: px2dp(120),
+    minWidth: px2dp(120),
     alignSelf: 'center',
-    // backgroundColor: '#eee',
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: px2dp(2),
+    marginVertical: px2dp(6)
   },
   leftBox: {
     width: px2dp(100),
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   rightBox: {
     marginLeft: px2dp(20),
     height: px2dp(100),
+    maxHeight: px2dp(120),
     width: px2dp(200),
     alignItems: 'center',
     justifyContent: 'center',
