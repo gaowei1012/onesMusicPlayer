@@ -34,19 +34,22 @@ class PersonalPage extends React.PureComponent {
         id: 2,
         title: '我的好友',
         icon: require('../../images/personal/home.png'),
-        com: 'MyFriend',
+        // com: 'MyFriend',
+        com: ''
       },
       {
         id: 3,
         title: '个人主页',
         icon: require('../../images/personal/hor.png'),
-        com: 'MyPersoanl',
+        // com: 'MyPersoanl',
+        com: ''
       },
       {
         id: 4,
         title: '个性装扮',
         icon: require('../../images/personal/personalized.png'),
-        com: 'DressedUp',
+        // com: 'DressedUp',
+        com: ''
       },
     ],
     avatar_url: 'https://iph.href.lu/60x60',
@@ -62,7 +65,11 @@ class PersonalPage extends React.PureComponent {
   }
 
   goToPage=(com)=> {
-    NavigationUtil.goPage({}, com)
+    if (com == '') {
+      Toast.showToast('功能开发中，请稍后!')
+    } else {
+      NavigationUtil.goPage({}, com)
+    }
   }
 
   goLoginPage=()=> {
@@ -111,13 +118,7 @@ class PersonalPage extends React.PureComponent {
         <SettingItem
           arrow={require('../../images/common/arrow.png')}
           icon={require('../../images/common/bofang.png')}
-          text={'我的收藏'}
-          handleFunc={() => Toast.showToast('功能开发中')}
-        />
-        <SettingItem
-          arrow={require('../../images/common/arrow.png')}
-          icon={require('../../images/common/bofang.png')}
-          text={'我的收藏'}
+          text={'关于我们'}
           handleFunc={() => Toast.showToast('功能开发中')}
           isBorder={true}
         />
