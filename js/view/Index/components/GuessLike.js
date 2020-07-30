@@ -24,6 +24,7 @@ import {
 import {personalizedNewsong} from '../../../expand/api';
 import SpinnerLoading from '../../../components/Spinner';
 import { px2dp } from '../../../utils/px2dp';
+import {Toast} from '../../../utils/Toast'
 
 
 // 今日推荐
@@ -50,7 +51,8 @@ class GuessLikePage extends React.PureComponent {
    * 跳转页面
    */
   goGuessLikePage = () => {
-    NavigationUtil.goPage({title: '猜你喜欢'}, 'Player');
+    //NavigationUtil.goPage({title: '猜你喜欢'}, 'Player');
+    Toast.showToast('功能开发中')
   };
   _renderItem(data) {
     const item = data.item;
@@ -77,19 +79,10 @@ class GuessLikePage extends React.PureComponent {
     if (!recommend) {
       return <SpinnerLoading/>
     }
-    return (
-      <>
-        <FlatList
+    return <FlatList
           data={recommend}
           renderItem={this._renderItem}
         />
-        {/* {recommend  && recommend.map(item=> {
-          return (
-            
-          )
-        })} */}
-      </>
-    );
   };
   render() {
     return (

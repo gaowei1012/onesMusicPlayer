@@ -12,6 +12,7 @@ import {
 import {screentWidth} from '../../../utils/screenUtil';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {px2dp} from '../../../utils/px2dp';
+import {Toast} from '../../../utils/Toast';
 
 export default class MenuItem extends React.Component {
   state = {
@@ -32,7 +33,8 @@ export default class MenuItem extends React.Component {
         id: 3,
         text: '歌单',
         icon: require('../../../images/common/singerList.png'),
-        com: 'PlayListPage',
+        // com: 'PlayListPage',
+        com: ''
       },
       {
         id: 4,
@@ -49,7 +51,11 @@ export default class MenuItem extends React.Component {
     ],
   };
   goToPage(text, com) {
-    NavigationUtil.goPage({title: text}, com);
+    if (com == '') {
+      Toast.showToast('功能开发中')
+    } else {
+      NavigationUtil.goPage({title: text}, com);
+    }
   }
   renderMenuItem() {
     const {list} = this.state;
@@ -58,6 +64,7 @@ export default class MenuItem extends React.Component {
         {list.map(item => {
           return (
             <TouchableOpacity
+              activeOpacity={1}
               key={item.id}
               style={styles.itemBox}
               onPress={() => this.goToPage(item.text, item.com)}>

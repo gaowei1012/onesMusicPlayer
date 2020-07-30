@@ -11,18 +11,24 @@ import SelectedPlaylist from './components/SelectedPlaylist';
 import Swiper from 'react-native-swiper';
 import {px2dp} from '../../utils/px2dp';
 import {
+  TouchableOpacity,
   SafeAreaView,
   StyleSheet,
   ScrollView,
   Animated,
+  FlatList,
   Image,
+  View,
+  Text,
 } from 'react-native';
 import {
   banner_url,
   WeatherUrl,
   topPlaylistHigh,
+  personalizedNewsong,
 } from '../../expand/api';
 import SpinnerLoading from '../../components/Spinner'
+import { Toast } from '../../utils/Toast';
 
 class IndexPage extends React.PureComponent {
   state = {
@@ -38,11 +44,13 @@ class IndexPage extends React.PureComponent {
       onLoadBannerData,
       onLoadWeatherData,
       onLoadTopPlayListHigh,
+      onLoadRecommendData
     } = this.props;
     onLoadBannerData(banner_url);
     onLoadWeatherData(WeatherUrl);
     const player_list_url = topPlaylistHigh + '?' + 'limit=10&order=new';
     onLoadTopPlayListHigh(player_list_url);
+    onLoadRecommendData(personalizedNewsong);
   };
   renderBanner = () => {
     const banner = this.props.banner.item;
@@ -72,8 +80,33 @@ class IndexPage extends React.PureComponent {
   renderSelectedPlaylists = () => {
     return <SelectedPlaylist play_list={this.props.playHigh} />;
   };
+  _renderItem(data) {
+    const item = data.item;
+    console.log('data', data)
+    return <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => {Toast.showToast('功能开发中')}}
+      style={styles.guessContentWrap}
+    >
+      <Image style={styles.imageBox} source={{uri: item.picUrl}}/>
+      <View style={styles.guessContentBox}>
+        <Text style={styles.guessContenText}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
+  }
+  // 今日推荐
   renderGuessLike = () => {
-    return <GuessLikePage />;
+    const recommend = this.props.recommend.item;
+    if (!recommend) {
+      return <SpinnerLoading/>
+    }
+    console.log('recommend', recommend)
+    return <View style={styles.guessLikeBox}>
+      <View style={styles.topLikeBox}>
+        <Text style={styles.likeTitle}>今日推荐</Text>
+      </View>
+      <FlatList data={recommend} renderItem={this._renderItem}/>
+    </View>
   };
   render() {
     return (
@@ -91,8 +124,8 @@ class IndexPage extends React.PureComponent {
   }
 }
 
-export default connect(({banner, weather, playHigh}) => ({
-  banner, weather, playHigh
+export default connect(({banner, weather, playHigh,recommend}) => ({
+  banner, weather, playHigh,recommend
 }), (dispatch) => ({
   onLoadBannerData(url) {
     dispatch(actions.onLoadBannerData(url))
@@ -102,7 +135,10 @@ export default connect(({banner, weather, playHigh}) => ({
   },
   onLoadTopPlayListHigh(url) {
     dispatch(actions.onLoadTopPlayListHigh(url))
-  }
+  },
+  onLoadRecommendData(url) {
+    dispatch(actions.onLoadRecommendData(url))
+  },
 }))(IndexPage)
 
 const styles = StyleSheet.create({
@@ -127,4 +163,33 @@ const styles = StyleSheet.create({
     width: screentWidth,
     height: px2dp(99),
   },
+  // 今日推荐
+  guessLikeBox: {
+    width: px2dp(365),
+    alignSelf: 'center',
+    marginVertical: px2dp(6)
+  },
+  likeTitle: {
+    color: '#333',
+    fontSize: px2dp(14)
+  },
+  guessContentWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: px2dp(6),
+    marginVertical: px2dp(6)
+  },
+  imageBox: {
+    width: px2dp(60),
+    height: px2dp(60),
+    borderRadius: px2dp(4)
+  },
+  guessContentBox: {
+    marginHorizontal: px2dp(16),
+    alignItems: 'flex-start'
+  },
+  guessContenText: {
+    fontSize: px2dp(14),
+    color: '#333'
+  }
 });
