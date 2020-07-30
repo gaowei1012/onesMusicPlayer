@@ -18,6 +18,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* onesMusicPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* onesMusicPlayerTests.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8CA1168837E30505725B17E3 /* libPods-onesMusicPlayer-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF89ABEB869C3A42FCA14318 /* libPods-onesMusicPlayer-tvOS.a */; };
+		9CEF46F724CFCD81009D8B38 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 9CEF46F624CFCD80009D8B38 /* assets */; };
+		9CEF46F924CFCD87009D8B38 /* index.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 9CEF46F824CFCD87009D8B38 /* index.jsbundle */; };
 		B198DCDACE3BFA20DDD1E6CE /* libPods-onesMusicPlayer-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A57518A6CDD3BF66BAC487A0 /* libPods-onesMusicPlayer-tvOSTests.a */; };
 		D4835B059C13DB8BFCE94086 /* libPods-onesMusicPlayer-onesMusicPlayerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BF26A9920FC6E6B7131A906 /* libPods-onesMusicPlayer-onesMusicPlayerTests.a */; };
 /* End PBXBuildFile section */
@@ -59,6 +61,8 @@
 		4843BCDA886B3A4AF1DE7F23 /* libPods-onesMusicPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-onesMusicPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = onesMusicPlayer/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E3C9F3F061C323077AD5EFB /* Pods-onesMusicPlayer-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-onesMusicPlayer-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-onesMusicPlayer-tvOSTests/Pods-onesMusicPlayer-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9CEF46F624CFCD80009D8B38 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = bundle/assets; sourceTree = "<group>"; };
+		9CEF46F824CFCD87009D8B38 /* index.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = index.jsbundle; path = bundle/index.jsbundle; sourceTree = "<group>"; };
 		A57518A6CDD3BF66BAC487A0 /* libPods-onesMusicPlayer-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-onesMusicPlayer-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8D2F7050A92BE42B0CB234B /* Pods-onesMusicPlayer-onesMusicPlayerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-onesMusicPlayer-onesMusicPlayerTests.release.xcconfig"; path = "Target Support Files/Pods-onesMusicPlayer-onesMusicPlayerTests/Pods-onesMusicPlayer-onesMusicPlayerTests.release.xcconfig"; sourceTree = "<group>"; };
 		CAA0C9AB8D53DA1900B731A5 /* Pods-onesMusicPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-onesMusicPlayer.release.xcconfig"; path = "Target Support Files/Pods-onesMusicPlayer/Pods-onesMusicPlayer.release.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 		13B07FAE1A68108700A75B9A /* onesMusicPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				9CEF46F824CFCD87009D8B38 /* index.jsbundle */,
+				9CEF46F624CFCD80009D8B38 /* assets */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -161,7 +167,6 @@
 				8E3C9F3F061C323077AD5EFB /* Pods-onesMusicPlayer-tvOSTests.debug.xcconfig */,
 				2535821D27F217D01442C197 /* Pods-onesMusicPlayer-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -294,6 +299,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 263445U3C3;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -340,8 +346,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CEF46F724CFCD81009D8B38 /* assets in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				9CEF46F924CFCD87009D8B38 /* index.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,6 +664,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 263445U3C3;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = onesMusicPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -679,6 +688,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 263445U3C3;
 				INFOPLIST_FILE = onesMusicPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

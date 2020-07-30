@@ -46,6 +46,8 @@ static void InitializeFlipper(UIApplication *application) {
   return YES;
 }
 
+// 添加js打包后m编译的文件脚本
+// 真机测试
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
