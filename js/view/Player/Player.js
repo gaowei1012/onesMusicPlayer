@@ -8,7 +8,8 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    Image
+    Image,
+    Platform
 } from 'react-native'
 import NavigationUtil from '../../utils/NavigationUtil'
 
@@ -170,7 +171,7 @@ class Player extends React.PureComponent {
                     activeOpacity={1}
                     onPress={() => {Toast.showToast('功能开发中')}}
                 >
-                    <Text>分享</Text>
+                    <Text style={styles.sharge}>分享</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -255,7 +256,7 @@ class Player extends React.PureComponent {
                 />
                 <PlayerItems
                     icon={this.state.isPlayer ? <ZanIcon width={26} height={26}/> : <PlayerIcon width={26} height={26}/>}
-                    handleFunc={this.switchPlayer}
+                    handleFunc={() => {Toast.showToast('功能开发中')}}
                 />
                 <PlayerItems
                     icon={<NextIcon width={26} height={26}/>}
@@ -362,8 +363,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between'
-      
+        justifyContent: 'space-between',
+        marginTop: Platform.OS === 'ios' ? px2dp(6) : px2dp(12), // fix android 顶部距离
     },
     name: {
         color: '#ddd',
@@ -384,5 +385,10 @@ const styles = StyleSheet.create({
         width: px2dp(22),
         height: px2dp(22),
         backgroundColor: 'red',
+    },
+    // 分享
+    sharge: {
+        color: '#fff',
+        fontSize: px2dp(12)
     }
 })
