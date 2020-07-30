@@ -24,6 +24,7 @@ import {
 } from '../../../styles/constants';
 import {px2dp} from '../../../utils/px2dp';
 import SpinnerLoading from '../../../components/Spinner';
+import {Toast} from '../../../utils/Toast';
 // 精选歌单
 class SelectedPlaylist extends React.Component {
   static propTypes = {
@@ -34,14 +35,15 @@ class SelectedPlaylist extends React.Component {
     let result = play_list.item;
   };
   goToPage(id) {
-    NavigationUtil.goPage({id}, 'SelectMorePage')
+    Toast.showToast('功能开发中')
   }
   /**
    * 跳转更多页面
    */
   goToMorePage = () => {
     //const list = this.props.play_list.item;
-    NavigationUtil.goPage({}, 'MorePlayPage');
+    //NavigationUtil.goPage({}, 'MorePlayPage');
+    Toast.showToast('功能开发中')
   };
   renderItem() {
     const result = this.props.play_list.item;
@@ -49,14 +51,14 @@ class SelectedPlaylist extends React.Component {
       return <SpinnerLoading/>
     }
     return (
-      <View style={{flexDirection: row, height: px2dp(130), paddingLeft: px2dp(6), marginRight: px2dp(6)}}>
+      <View style={{flexDirection: row, paddingHorizontal: px2dp(6)}}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {result.map(item => (
                 <View key={item.id}>
                   <TouchableOpacity
                     onPress={() => this.goToPage(item.userId)}
                     style={styles.itemBox}
-                    activeOpacity={0.8}>
+                    activeOpacity={1}>
                     <Image
                       source={{uri: item.coverImgUrl}}
                       style={styles.playImage}
@@ -68,19 +70,13 @@ class SelectedPlaylist extends React.Component {
                         source={require('../../../images/common/player.png')}
                         style={{width: 10, height: 10}}
                       />
-                      <Text>{item.trackCount}</Text>
+                      <Text style={styles.playCount}>{item.trackCount}</Text>
                     </View>
-                    {/* 播放icon */}
-                    <View style={styles.palyerBox}>
-                      <Image
-                        style={styles.palyerBtn}
-                        source={require('../../../images/common/bofang.png')}
-                      />
-                    </View>
+                    <Text style={styles.itemText} numberOfLines={1}>
+                      {item.name}
+                    </Text>
                   </TouchableOpacity>
-                  <Text style={styles.itemText} numberOfLines={1}>
-                    {item.name}
-                  </Text>
+                 
                 </View>
               ))}
         </ScrollView>
@@ -92,16 +88,6 @@ class SelectedPlaylist extends React.Component {
       <View style={styles.conatainer}>
         <View style={styles.topBox}>
           <Text style={styles.topTitle}>精选歌单</Text>
-          <TouchableOpacity
-            style={styles.moreBox}
-            onPress={this.goToMorePage}
-            activeOpacity={0.8}>
-            <Text style={styles.topMore}>更多</Text>
-            <Image
-              style={styles.arrow}
-              source={require('../../../images/common/arrow.png')}
-            />
-          </TouchableOpacity>
         </View>
         {this.renderItem()}
       </View>
@@ -113,10 +99,9 @@ export default SelectedPlaylist;
 
 const styles = StyleSheet.create({
   conatainer: {
-    marginTop: px2dp(20),
+    marginTop: px2dp(8),
     width: screentWidth,
-    backgroundColor: '#eee',
-    height: px2dp(170),
+    paddingBottom: px2dp(6)
   },
   topBox: {
     flexDirection: row,
@@ -125,8 +110,8 @@ const styles = StyleSheet.create({
   },
   topTitle: {
     fontFamily: iosFontFmily,
-    color: fontColor,
-    fontSize: px2dp(16),
+    color: '#333',
+    fontSize: px2dp(14),
   },
   moreBox: {
     flexDirection: row,
@@ -143,26 +128,21 @@ const styles = StyleSheet.create({
   },
   itemBox: {
     marginTop: px2dp(4),
-    marginLeft: px2dp(4),
-    width: px2dp(100),
-    height: px2dp(100),
-    backgroundColor: '#fff',
-    borderRadius: px2dp(6),
-    overflow: 'hidden',
-    justifyContent: center,
+    marginHorizontal: px2dp(4),
+    width: px2dp(80),
   },
   playImage: {
-    width: px2dp(100),
-    height: px2dp(100),
+    width: px2dp(80),
+    height: px2dp(80),
+    borderRadius: px2dp(6),
   },
   itemText: {
-    width: px2dp(90),
-    textAlign: center,
+    // width: px2dp(80),
     marginTop: px2dp(6),
-    marginLeft: px2dp(10),
     fontFamily: iosFontFmily,
-    fontSize: defaultFontSize,
+    fontSize: px2dp(12),
     color: fontColor,
+    marginHorizontal: px2dp(3)
   },
   // 播放量
   palyerNumBox: {
@@ -185,4 +165,9 @@ const styles = StyleSheet.create({
     height: px2dp(25),
     width: px2dp(25),
   },
+  playCount: {
+    fontSize: px2dp(12),
+    color: '#fff',
+    marginHorizontal: px2dp(3)
+  }
 });

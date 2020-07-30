@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: px2dp(6),
-    marginVertical: px2dp(6)
+    marginVertical: px2dp(8)
   },
   imageBox: {
     width: px2dp(60),
