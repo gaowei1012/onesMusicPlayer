@@ -33,21 +33,16 @@ class RaioPage extends PureComponent {
     onRadioBanner(radioBanner);
     onRadioRaking(radioRaking);
   };
-  /**
-   * 跳转对应页
-   */
-  goToRadioDetail = () => {
-    Alert.alert('hhh');
-  };
 
   goToPage = (com) => {
     // NavigationUtil.goPage({}, com)
-    Toast.showToast('功能开发中...')
+    Toast.showToast('功能开发中')
   }
 
   goToMorePage = (id) => {
-    console.log('id', id)
-    NavigationUtil.goPage({id}, 'MoreRadio')
+    // console.log('id', id)
+    // NavigationUtil.goPage({id}, 'MoreRadio')
+    Toast.showToast('功能开发中')
   }
   /**
    * 渲染头部
@@ -99,7 +94,7 @@ class RaioPage extends PureComponent {
     return (
       <View style={styles.radioItemBox}>
         {menu_data && menu_data.map(item => {
-          return <TouchableOpacity activeOpacity={.8} onPress={() => this.goToPage(item.com)} style={{flexDirection: 'column', alignItems: center}}>
+          return <TouchableOpacity activeOpacity={1} onPress={() => this.goToPage(item.com)} style={{flexDirection: 'column', alignItems: center}}>
             <Image style={styles.radioItemIcon} source={item.icon} />
             <Text style={{marginTop: px2dp(6)}} key={item.id}>{item.title}</Text>
           </TouchableOpacity>
@@ -127,7 +122,7 @@ class RaioPage extends PureComponent {
           horizontal={true}>
           {radioRaking && radioRaking.map(item => {
             return (
-              <TouchableOpacity onPress={() => this.goToMorePage(item.id)} activeOpacity={.8} style={styles.rakingItemBox} key={item.id}>
+              <TouchableOpacity onPress={() => this.goToMorePage(item.id)} activeOpacity={1} style={styles.rakingItemBox} key={item.id}>
                 <Image style={styles.radioRakingImage} source={{uri: item.picUrl}}/>
                 <Text numberOfLines={1} style={styles.radioText}>{item.rcmdtext}</Text>
               </TouchableOpacity>
