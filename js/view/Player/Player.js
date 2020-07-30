@@ -80,6 +80,13 @@ class Player extends React.PureComponent {
         this.getSongData(id)
     }
 
+    // 歌词
+    goToLyrics=()=> {
+        let id = this.props.navigation.state.params.item.id;
+        // console.log('iiisis', id)
+        NavigationUtil.goPage({id}, 'Lyric')
+    }
+
     getSongData(id) {
         // const {id} = this.state
         const {onLoadSongUrl} = this.props
@@ -180,14 +187,14 @@ class Player extends React.PureComponent {
          *   播放图片， 顺时针旋转
          */
         const playerAndmin = (
-            <View style={styles.playerAndminWrap}>
+            <TouchableOpacity activeOpacity={1} onPress={this.goToLyrics} style={styles.playerAndminWrap}>
                 <View style={styles.playerAndminBox}>
                     <View style={styles.playerAndminBorder}>
                         {/* <Text>播放</Text> */}
                         <Image style={styles.playerAndminImageBox} source={{uri: this.state.backgroundUrl}}/>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
         // 播放喜欢列表
         const likeMeunItem = (

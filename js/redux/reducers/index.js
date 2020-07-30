@@ -24,7 +24,6 @@ import resoucre from './index/resoucre';
 import like from './index/song/like';
 import likeList from './index/song/likelist';
 import rankiglist from './index/rakinglist';
-import lyric from './index/song/lyric';
 import djprogram from './index/djprogram';
 import personaliz from './index/song/personaliz';
 import mvDetail from './video/mvDetail';
@@ -36,6 +35,7 @@ import personalMv from './video/personalMv';
 import playList from './personal/user/playList';
 import catlisttype from './index/catlist/catlisttype';
 import catlistdetail from './index/catlist/catlistdetail';
+import lyric from '../../view/Player/redux/reducre';
 
 const navState = RootNavigation.router.getStateForAction(
   RootNavigation.router.getActionForPathAndParams(rootCom),

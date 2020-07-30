@@ -42,6 +42,7 @@ import MoreRadio from '../view/Radio/MoreRadio';
 import NoticesPage from '../view/Notices/NoticesPage';
 import VideoPalyer from '../view/Video/VideoPalyer';
 import SelectMorePage from '../view/Index/SelectMorePage';
+import Lyric from '../view/Player/lyrics'
 
 export const rootCom = 'Init';
 
@@ -237,6 +238,12 @@ const MainNavigator = createStackNavigator({
   },
   SelectMorePage: {
     screen: SelectMorePage,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Lyric: {
+    screen: Lyric,
     navigationOptions: {
       header: null
     }

@@ -133,6 +133,8 @@ module.exports = {
   playCatListDetail: 'playlist/detail',
   // 每日推荐
   eventRecommend: 'recommend/songs',
+  // 歌词
+  lyric: 'lyric',
 
 
   // 首页天气
