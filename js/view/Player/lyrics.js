@@ -10,11 +10,12 @@ import {GoBack} from '../../utils/GoBack'
 
 class Lyric extends React.PureComponent {
     state={
-        name: '歌词',
+        name: null,
         lyric: null,
     }
     componentDidMount() {
-        let id = this.props.navigation.state.params.id
+        let {id,name} = this.props.navigation.state.params
+        this.setState({name})
         const {getLyricData} = this.props
         let url = `${lyric}?id=${id}`
         getLyricData(url)

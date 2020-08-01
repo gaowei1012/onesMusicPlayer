@@ -63,7 +63,7 @@ class Player extends React.PureComponent {
             ar: [],
             id: null, // 歌曲id
             backgroundUrl: null,
-            isPlayer: true,
+            isPlayer: true
         }
     }
 
@@ -83,8 +83,9 @@ class Player extends React.PureComponent {
     // 歌词
     goToLyrics=()=> {
         let id = this.props.navigation.state.params.item.id;
+        const {name} = this.state
         // console.log('iiisis', id)
-        NavigationUtil.goPage({id}, 'Lyric')
+        NavigationUtil.goPage({id,name}, 'Lyric')
     }
 
     getSongData(id) {
