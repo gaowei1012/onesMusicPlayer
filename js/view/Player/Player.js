@@ -128,7 +128,7 @@ class Player extends React.PureComponent {
     _player=()=> {
         const url = this.props.songUrl.item
         if (!url) {
-            return <>{Toast.showToast('加载中...')}</>
+            return <>{Toast.showToast('加载中')}</>
         }
         return <Video
             ref={(ref) => {
@@ -151,6 +151,49 @@ class Player extends React.PureComponent {
         this.setState({
             isPlayer: !this.state.isPlayer
         })
+    }
+    
+    /**
+     * 下载歌曲
+     */
+    _dowladMuisc=()=> {
+        const url = this.props.songUrl.item;
+        const _dowladUrl = url[0].url;
+
+        const downloadDest = `${RNFS.MainBundlePath}/${((Math.random() * 1000) | 0)}.mp3`;
+ 
+        const options = {
+            fromUrl: _dowladUrl,
+            toFile: downloadDest,
+            background: true,
+            begin: (res) => {
+                console.log('begin', res);
+                console.log('contentLength:', res.contentLength / 1024 / 1024, 'M');
+            },
+            progress: (res) => {
+ 
+                let pro = res.bytesWritten / res.contentLength;
+ 
+                this.setState({
+                    progressNum: pro,
+                });
+            }
+        }
+
+        try {
+            const ret = RNFS.downloadFile(options);
+            ret.promise.then(res => {
+                console.log('success', res);
+ 
+                console.log('file://' + downloadDest)
+ 
+            }).catch(err => {
+                console.log('err', err);
+            });
+        }
+        catch (e) {
+            console.log(error);
+        }
     }
 
     render() {
@@ -205,7 +248,7 @@ class Player extends React.PureComponent {
                 />
                 <PlayerItems
                     icon={<DowloadIcon width={px2dp(26)} height={26}/>}
-                    handleFunc={() => {Toast.showToast('功能开发中')}}
+                    handleFunc={this._dowladMuisc}
                 />
                 <PlayerItems
                     icon={<HuaIcon width={px2dp(26)} height={26}/>}
