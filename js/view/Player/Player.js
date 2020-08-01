@@ -168,6 +168,7 @@ class Player extends React.PureComponent {
             toFile: downloadDest,
             background: true,
             begin: (res) => {
+                Toast.showToast('下载成功', res.contentLength)
                 console.log('begin', res);
                 console.log('contentLength:', res.contentLength / 1024 / 1024, 'M');
             },
