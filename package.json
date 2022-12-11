@@ -19,7 +19,7 @@
     "babel-plugin-transform-remove-console": "^6.9.4",
     "metro-config": "^0.61.0",
     "prop-types": "^15.7.2",
-    "qs": "^6.9.1",
+    "qs": "^6.9.7",
     "rc-form": "^2.4.11",
     "react": "16.13.1",
     "react-native": "0.63.1",
